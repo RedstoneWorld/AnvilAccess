@@ -2,6 +2,7 @@ package xyz.gamecrash.AnvilAccess.nbt.entities;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import xyz.gamecrash.AnvilAccess.nbt.tags.ByteTag;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 import xyz.gamecrash.AnvilAccess.nbt.tags.ListTag;
 
@@ -39,6 +40,10 @@ public class BlockEntity {
     public Optional<String> getString(String key) {
         String string = nbt.getString(key, null);
         return Optional.ofNullable(string);
+    }
+
+    public byte getByte(String key) {
+        return nbt.getByte(key, (byte) 0);
     }
 
     public int getInt(String key) { return nbt.getInt(key, 0); }
