@@ -2,6 +2,10 @@ package xyz.gamecrash.AnvilAccess.io;
 
 import xyz.gamecrash.AnvilAccess.model.*;
 import xyz.gamecrash.AnvilAccess.nbt.*;
+import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.ListTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.NamedTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.Tag;
 import xyz.gamecrash.AnvilAccess.util.block.BlockStateDecoder;
 
 import java.io.ByteArrayInputStream;

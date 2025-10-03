@@ -1,4 +1,6 @@
-package xyz.gamecrash.AnvilAccess.nbt;
+package xyz.gamecrash.AnvilAccess.nbt.tags;
+
+import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
 public class ByteTag extends Tag {
     private final byte value;

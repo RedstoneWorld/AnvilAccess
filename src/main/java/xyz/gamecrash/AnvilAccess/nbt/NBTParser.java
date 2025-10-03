@@ -1,5 +1,7 @@
 package xyz.gamecrash.AnvilAccess.nbt;
 
+import xyz.gamecrash.AnvilAccess.nbt.tags.*;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;

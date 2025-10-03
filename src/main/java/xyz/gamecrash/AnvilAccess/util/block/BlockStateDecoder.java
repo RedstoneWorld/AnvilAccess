@@ -1,8 +1,8 @@
 package xyz.gamecrash.AnvilAccess.util.block;
 
 import xyz.gamecrash.AnvilAccess.model.BlockState;
-import xyz.gamecrash.AnvilAccess.nbt.CompoundTag;
-import xyz.gamecrash.AnvilAccess.nbt.StringTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.StringTag;
 
 import java.util.HashMap;
 import java.util.Map;

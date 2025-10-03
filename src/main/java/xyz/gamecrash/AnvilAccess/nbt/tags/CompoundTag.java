@@ -1,4 +1,6 @@
-package xyz.gamecrash.AnvilAccess.nbt;
+package xyz.gamecrash.AnvilAccess.nbt.tags;
+
+import xyz.gamecrash.AnvilAccess.nbt.*;
 
 import java.util.*;
 

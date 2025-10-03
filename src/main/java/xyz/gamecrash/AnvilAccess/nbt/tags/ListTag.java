@@ -1,6 +1,7 @@
-package xyz.gamecrash.AnvilAccess.nbt;
+package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import lombok.Getter;
+import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
 import java.util.ArrayList;
 import java.util.Iterator;

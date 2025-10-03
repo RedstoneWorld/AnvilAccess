@@ -2,7 +2,7 @@ package xyz.gamecrash.AnvilAccess.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import xyz.gamecrash.AnvilAccess.nbt.CompoundTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
 import java.util.List;
 import java.util.Optional;
