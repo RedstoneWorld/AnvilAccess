@@ -51,7 +51,7 @@ public class RegionFileLoader {
         byte[] decompressed = reader.decompressAndReadChunkData(entry);
 
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(decompressed))) {
-            NamedTag namedTag = NBTParser.readNamed(input);
+            NamedTag namedTag = TagParser.readNamed(input);
             if (!(namedTag.tag() instanceof CompoundTag rootTag)) throw new IOException("Root tag is not a compound tag");
 
             int cX = regionX * 32 + localX;

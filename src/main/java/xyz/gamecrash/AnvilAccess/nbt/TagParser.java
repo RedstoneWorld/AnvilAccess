@@ -6,7 +6,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-public class NBTParser {
+public class TagParser {
 
     public static NamedTag readNamed(DataInputStream input) throws IOException {
         byte typeId = input.readByte();
