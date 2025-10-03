@@ -124,9 +124,4 @@ public class RegionFile {
 
     @Override
     public String toString() { return String.format("RegionFile(%d;%d)[File:%s;ChunkCount:%d]", regionX, regionZ, file.getFileName(), getChunkCount()); }
-
-    @FunctionalInterface
-    public interface ChunkLoader {
-        Chunk load(int localX, int localZ) throws IOException; // for future reference: reading through io
-    }
 }

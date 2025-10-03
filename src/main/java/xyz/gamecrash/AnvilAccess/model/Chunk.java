@@ -2,6 +2,7 @@ package xyz.gamecrash.AnvilAccess.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import xyz.gamecrash.AnvilAccess.nbt.CompoundTag;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.Optional;
 public class Chunk {
     private final int chunkX;
     private final int chunkZ;
+    private final CompoundTag nbt;
     private final List<Section> sections;
 
     public Block getBlock(int x, int y, int z) {
@@ -62,6 +64,14 @@ public class Chunk {
     public int getWorldX() { return chunkX << 4; }
 
     public int getWorldZ() { return chunkZ << 4; }
+
+    public int getDataVersion() { return nbt.getInt("DataVersion", 0); }
+
+    public long getLastUpdate() { return nbt.getLong("LastUpdate", 0L); }
+
+    public long getInhabitedTime() { return nbt.getLong("InhabitedTime", 0L); }
+
+    public boolean isGenerated() { return !sections.isEmpty(); }
 
     @Override
     public String toString() { return String.format("Chunk(%d;%d)[Sections:%d]", chunkX, chunkZ, sections.size()); }
