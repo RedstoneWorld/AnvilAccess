@@ -1,4 +1,4 @@
-package model;
+package xyz.gamecrash.AnvilAccess.model;
 
 import java.util.Map;
 

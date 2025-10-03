@@ -1,4 +1,4 @@
-package model;
+package xyz.gamecrash.AnvilAccess.model;
 
 public record Block(BlockState state, int x, int y, int z) {
 

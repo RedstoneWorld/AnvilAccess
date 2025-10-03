@@ -1,4 +1,4 @@
-package model;
+package xyz.gamecrash.AnvilAccess.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

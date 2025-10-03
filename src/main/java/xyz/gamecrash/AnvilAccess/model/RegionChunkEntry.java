@@ -1,4 +1,4 @@
-package model;
+package xyz.gamecrash.AnvilAccess.model;
 
 public record RegionChunkEntry(int offset, int sectorCount, int timestamp) {
 
