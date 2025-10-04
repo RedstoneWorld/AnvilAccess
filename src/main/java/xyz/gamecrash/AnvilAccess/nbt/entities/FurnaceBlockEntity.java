@@ -2,12 +2,14 @@ package xyz.gamecrash.AnvilAccess.nbt.entities;
 
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
-public abstract class FurnaceBlockEntity extends ContainerBlockEntity {
+public abstract class FurnaceBlockEntity extends InventoryBlockEntity {
     public FurnaceBlockEntity(CompoundTag nbt) { super(nbt); }
 
-    public short getBurnTime() { return getNbt().getShort("BurnTime", (short) 0); }
+    public short getLitTimeRemaining() { return getNbt().getShort("lit_time_remaining", (short) 0); }
 
-    public short getCookTime() { return getNbt().getShort("CookTime", (short) 0); }
+    public short getCookingTimeSpent() { return getNbt().getShort("cooking_time_spent", (short) 0); }
 
-    public short getCookTimeTotal() { return getNbt().getShort("CookTimeTotal", (short) 200); }
+    public short getCookingTotalTime() { return getNbt().getShort("cooking_total_time", (short) 200); }
+
+    public short getLitTotalTime() { return getNbt().getShort("lit_total_time", (short) 0); }
 }

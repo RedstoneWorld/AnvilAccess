@@ -4,7 +4,7 @@ import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
 import java.util.Optional;
 
-public abstract class InventoryBlockEntity extends BlockEntity {
+public abstract class InventoryBlockEntity extends ContainerBlockEntity {
     public InventoryBlockEntity(CompoundTag nbt) { super(nbt); }
 
     public Optional<String> getDisplayName() { return getCustomName(); }
