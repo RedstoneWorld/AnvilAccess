@@ -4,15 +4,12 @@ import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
 import java.util.Optional;
 
-public abstract class InventoryBlockEntity extends ContainerBlockEntity {
+public class InventoryBlockEntity extends ContainerBlockEntity {
     public InventoryBlockEntity(CompoundTag nbt) { super(nbt); }
 
     public Optional<String> getDisplayName() { return getCustomName(); }
 
-    public Optional<String> getLock() {
-        String lock = getNbt().getString("lock", null);
-        return Optional.ofNullable(lock).filter(s -> !s.isEmpty());
-    }
+    public Optional<CompoundTag> getLock() { return getCompound("lock");}
 
     public boolean isLocked() { return getLock().isPresent(); }
 }

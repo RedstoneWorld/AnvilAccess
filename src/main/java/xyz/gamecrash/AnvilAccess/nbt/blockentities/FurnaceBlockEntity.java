@@ -1,8 +1,9 @@
-package xyz.gamecrash.AnvilAccess.nbt.blockentities.base;
+package xyz.gamecrash.AnvilAccess.nbt.blockentities;
 
+import xyz.gamecrash.AnvilAccess.nbt.blockentities.base.InventoryBlockEntity;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
-public abstract class FurnaceBlockEntity extends InventoryBlockEntity {
+public class FurnaceBlockEntity extends InventoryBlockEntity {
     public FurnaceBlockEntity(CompoundTag nbt) { super(nbt); }
 
     public short getLitTimeRemaining() { return getNbt().getShort("lit_time_remaining", (short) 0); }
