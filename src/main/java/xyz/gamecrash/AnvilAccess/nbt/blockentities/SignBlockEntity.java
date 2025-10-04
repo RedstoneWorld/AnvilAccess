@@ -1,6 +1,7 @@
-package xyz.gamecrash.AnvilAccess.nbt.entities;
+package xyz.gamecrash.AnvilAccess.nbt.blockentities;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
+import xyz.gamecrash.AnvilAccess.nbt.blockentities.base.BlockEntity;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 import xyz.gamecrash.AnvilAccess.nbt.tags.ListTag;
 

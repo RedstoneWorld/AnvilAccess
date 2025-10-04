@@ -1,8 +1,7 @@
-package xyz.gamecrash.AnvilAccess.nbt.entities;
+package xyz.gamecrash.AnvilAccess.nbt.blockentities.base;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import xyz.gamecrash.AnvilAccess.nbt.tags.ByteTag;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 import xyz.gamecrash.AnvilAccess.nbt.tags.ListTag;
 
