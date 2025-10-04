@@ -1,6 +1,6 @@
 package xyz.gamecrash.AnvilAccess.nbt.entities;
 
-import xyz.gamecrash.AnvilAccess.nbt.ItemStack;
+import xyz.gamecrash.AnvilAccess.nbt.SlotItemStack;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
 import java.util.Optional;
@@ -12,5 +12,5 @@ public class BrushableBlockEntity extends BlockEntity {
 
     public long getLootTableSeed() { return getNbt().getLong("LootTableSeed", 0); }
 
-    public Optional<ItemStack> getItem() { return getCompound("item").map(ItemStack::new); }
+    public Optional<SlotItemStack> getItem() { return getCompound("item").map(SlotItemStack::new); }
 }
