@@ -11,12 +11,12 @@ public class ItemStack {
 
     public String getId() { return nbt.getString("id", "minecraft:air"); }
 
-    public byte getCount() { return nbt.getByte("Count", (byte) 1); }
+    public byte getCount() { return nbt.getByte("count", (byte) 1); }
 
     public byte getSlot() { return nbt.getByte("Slot", (byte) 0); }
 
-    public Optional<CompoundTag> getTag() {
-        CompoundTag tag = nbt.getCompound("tag", null);
+    public Optional<CompoundTag> getComponents() {
+        CompoundTag tag = nbt.getCompound("components", null);
         return Optional.ofNullable(tag);
     }
 

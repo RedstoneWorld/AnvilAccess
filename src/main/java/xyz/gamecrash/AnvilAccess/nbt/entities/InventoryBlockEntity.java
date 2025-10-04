@@ -10,7 +10,7 @@ public abstract class InventoryBlockEntity extends ContainerBlockEntity {
     public Optional<String> getDisplayName() { return getCustomName(); }
 
     public Optional<String> getLock() {
-        String lock = getNbt().getString("Lock", null);
+        String lock = getNbt().getString("lock", null);
         return Optional.ofNullable(lock).filter(s -> !s.isEmpty());
     }
 
