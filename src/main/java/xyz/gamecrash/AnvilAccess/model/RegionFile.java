@@ -66,7 +66,7 @@ public class RegionFile {
     public RegionChunkEntry getEntry(int localX, int localZ) {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) throw new IllegalArgumentException("Chunk coordinates out of bounds");
 
-        return entries[localZ * 32 * localX];
+        return entries[localZ * 32 + localX];
     }
 
     public Stream<Chunk> streamChunks() {
@@ -74,7 +74,7 @@ public class RegionFile {
 
         for (int z = 0; z < 32; z++) {
             for (int x = 0; x < 32; x++) {
-                int index = x * 32 * z;
+                int index = x * 32 + z;
                 RegionChunkEntry entry = entries[index];
 
                 if (entry.isEmpty()) continue;
