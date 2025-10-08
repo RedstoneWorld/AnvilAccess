@@ -2,10 +2,16 @@ package xyz.gamecrash.AnvilAccess.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import xyz.gamecrash.AnvilAccess.nbt.BlockEntityParser;
+import xyz.gamecrash.AnvilAccess.nbt.TagType;
+import xyz.gamecrash.AnvilAccess.nbt.blockentities.base.BlockEntity;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
+import xyz.gamecrash.AnvilAccess.nbt.tags.ListTag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter @RequiredArgsConstructor
 public class Chunk {
@@ -59,6 +65,34 @@ public class Chunk {
             .mapToInt(s -> s.getAbsoluteY() + 15)
             .max()
             .orElse(255);
+    }
+
+    public List<CompoundTag> getBlockEntityCompounds() {
+        ListTag blockEntityTag = nbt.getList("block_entities", new ListTag(TagType.COMPOUND));
+        if (blockEntityTag == null || blockEntityTag.isEmpty()) blockEntityTag = nbt.getList("TileEntities", new ListTag(TagType.COMPOUND)); // legacy format
+        if (blockEntityTag == null) return List.of();
+
+        List<CompoundTag> blockEntities = new ArrayList<>();
+        for (int i = 0; i < blockEntityTag.size(); i++) {
+            CompoundTag blockEntity = blockEntityTag.getCompound(i);
+            if (blockEntity != null) blockEntities.add(blockEntity);
+        }
+
+        return blockEntities;
+    }
+
+    public List<BlockEntity> getBlockEntites() {
+        return getBlockEntityCompounds().stream()
+            .map(BlockEntityParser::fromNbt)
+            .collect(Collectors.toList());
+    }
+
+    public Optional<CompoundTag> getBlockEntity(int x, int y, int z) {
+        return getBlockEntityCompounds().stream()
+            .filter(be -> be.getInt("x", Integer.MIN_VALUE) == x &&
+                be.getInt("y", Integer.MIN_VALUE) == y &&
+                be.getInt("z", Integer.MIN_VALUE) == z)
+            .findFirst();
     }
 
     public int getWorldX() { return chunkX << 4; }
