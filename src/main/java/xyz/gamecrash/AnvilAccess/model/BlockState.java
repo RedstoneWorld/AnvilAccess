@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.model;
 
 import java.util.Map;
 
+/**
+ * Representation of a block state, including its ID and properties. (Immutable)
+ */
 public record BlockState(String id, Map<String, String> properties) {
 
     public BlockState {
@@ -9,10 +12,19 @@ public record BlockState(String id, Map<String, String> properties) {
         properties = properties == null ? Map.of() : Map.copyOf(properties);
     }
 
+    /**
+     * Creates a BlockState with no properties
+     */
     public BlockState(String id) { this(id, Map.of()); }
 
+    /**
+     * Gets a property from the block state, e.g. the facing of a furnace
+     */
     public String getProperty(String key) { return properties.get(key); }
 
+    /**
+     * Gets a property from the block state, with a default value if the property is not set
+     */
     public String getProperty(String key, String defaultValue) { return properties.getOrDefault(key, defaultValue); }
 
     @Override

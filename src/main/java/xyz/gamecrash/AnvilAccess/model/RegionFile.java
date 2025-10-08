@@ -12,6 +12,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+/**
+ * Represents a MCA region file containing a 32x32 grid of chunks.
+ */
 @Getter @RequiredArgsConstructor
 public class RegionFile {
     private final Path file;
@@ -30,6 +33,12 @@ public class RegionFile {
         this.chunks = new Chunk[1024];
     }
 
+    /**
+     * Gets a chunk at the given local coordinates within this region
+     * @param localX Local X coordinate within region (0-31)
+     * @param localZ Local Z coordinate within region (0-31)
+     * @return Optional containing the chunk, if it exists
+     */
     public Optional<Chunk> getChunk(int localX, int localZ) {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) return Optional.empty();
 
@@ -54,6 +63,12 @@ public class RegionFile {
         return Optional.empty();
     }
 
+    /**
+     * Gets a chunk at world chunk coordinates
+     * @param worldX World chunk X coordinate
+     * @param worldZ World chunk Z coordinate
+     * @return Optional containing the chunk, if it exists in this region
+     */
     public Optional<Chunk> getWorldChunk(int worldX, int worldZ) {
         int localX = worldX - (regionX * 32);
         int localZ = worldZ - (regionZ * 32);
@@ -63,12 +78,19 @@ public class RegionFile {
         return getChunk(localX, localZ);
     }
 
+    /**
+     * Gets the RegionChunkEntry at the given local coordinates
+     */
     public RegionChunkEntry getEntry(int localX, int localZ) {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) throw new IllegalArgumentException("Chunk coordinates out of bounds");
 
         return entries[localZ * 32 + localX];
     }
 
+    /**
+     * Streams all available chunks in this region.
+     * Loads chunks lazily if not already cached
+     */
     public Stream<Chunk> streamChunks() {
         List<Chunk> available = new ArrayList<>();
 
@@ -100,24 +122,30 @@ public class RegionFile {
         return available.stream();
     }
 
+    /**
+     * Gets the number of chunks existing in this region
+     */
     public long getChunkCount() {
         return Arrays.stream(entries)
             .filter(entry -> !entry.isEmpty())
             .count();
     }
 
+    /**
+     * Gets the world chunk coordinates covered by this region
+     */
     public int getMinWorldChunkX() {
         return regionX * 32;
     }
-
+    /**{@link #getMinWorldChunkX() comment of here}*/
     public int getMaxWorldChunkX() {
         return regionX * 32 + 31;
     }
-
+    /**{@link #getMinWorldChunkX() comment of here}*/
     public int getMinWorldChunkZ() {
         return regionZ * 32;
     }
-
+    /**{@link #getMinWorldChunkX() comment of here}*/
     public int getMaxWorldChunkZ() {
         return regionZ * 32 + 31;
     }
