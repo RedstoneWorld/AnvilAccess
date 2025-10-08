@@ -81,7 +81,7 @@ public class Chunk {
         return blockEntities;
     }
 
-    public List<BlockEntity> getBlockEntites() {
+    public List<BlockEntity> getBlockEntities() {
         return getBlockEntityCompounds().stream()
             .map(BlockEntityParser::fromNbt)
             .collect(Collectors.toList());
