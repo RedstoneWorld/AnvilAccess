@@ -3,6 +3,7 @@ package xyz.gamecrash.AnvilAccess.util.hashing;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.zip.CRC32;
 
 public class HashUtils {
     public static String sha256(String input) {
@@ -33,6 +34,16 @@ public class HashUtils {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException("MD5 algorithm not found", e);
         }
+    }
+
+    public static String crc32(byte[] input) {
+        CRC32 crc = new CRC32();
+        crc.update(input);
+        return Long.toHexString(crc.getValue());
+    }
+
+    public static String crc32(String input) {
+        return crc32(input.getBytes());
     }
 
     private static String bytesToHex(byte[] bytes) {
