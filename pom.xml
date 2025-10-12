@@ -16,6 +16,8 @@
                 <version>3.12.0</version>
                 <configuration>
                     <excludePackageNames>lombok</excludePackageNames>
+                    <excludePackageNames>lz4-java</excludePackageNames>
+                    <doclint>all,-missing</doclint>
                 </configuration>
             </plugin>
 

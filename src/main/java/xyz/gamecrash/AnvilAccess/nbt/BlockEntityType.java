@@ -7,7 +7,9 @@ import java.util.Set;
 
 /**
  * Enum containing all possible block entity types
- * @apiNote should be on the version 1.21.9/10
+ * <p>
+ * Note: this should be on the version 1.21.9/10
+ * </p>
  */
 public enum BlockEntityType {
     BANNER("minecraft:banner"),

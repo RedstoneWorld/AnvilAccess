@@ -62,8 +62,10 @@ public class CompressionUtils {
 
     /**
      * Decompresses data using LZ4
-     * @apiNote LZ4 requires the decompressed size to be known beforehand.
+     * <p>
+     * NOTE: LZ4 requires the decompressed size to be known beforehand.
      * This implementation assumes the first 4B contain the decompressed size.
+     * </p>
      */
    private static byte[] decompressLz4(byte[] data) throws IOException {
         if (data.length < 4) throw new IOException("Data too short to contain size header");
