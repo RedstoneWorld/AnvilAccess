@@ -15,8 +15,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Loader for region (MCA) files bridging IO with the model classes
+ */
 public class RegionFileLoader {
 
+    /**
+     * Loads a region file at the given path
+     */
     public static RegionFile loadRegion(Path file) throws IOException {
         String fileName = file.getFileName().toString();
         if (!fileName.startsWith("r.") || !fileName.endsWith(".mca")) throw new IllegalArgumentException("Invalid region file name: " + fileName);
@@ -27,6 +33,7 @@ public class RegionFileLoader {
         int rX = Integer.parseInt(parts[0]);
         int rZ = Integer.parseInt(parts[1]);
 
+        // only read the chunk entries, not the chunk data
         try (MCAReader reader = new MCAReader(file)) {
             RegionChunkEntry[] entries = reader.readChunkEntries();
             RegionFile regionFile = new RegionFile(file, rX, rZ, entries);
@@ -37,16 +44,9 @@ public class RegionFileLoader {
         }
     }
 
-    private static void setupLazyLoading(RegionFile regionFile, Path file) {
-        regionFile.setChunkLoader((lX, lZ) -> {
-            try (MCAReader reader = new MCAReader(file)) {
-                RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
-                if (!entry.isEmpty()) return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(),  lX, lZ);
-                return null;
-            }
-        });
-    }
-
+    /**
+     * Loads a single chunk through the MCA reader
+     */
     public static Chunk loadChunk(MCAReader reader, RegionChunkEntry entry, int regionX, int regionZ, int localX, int localZ) throws IOException {
         byte[] decompressed = reader.decompressAndReadChunkData(entry);
 
@@ -62,6 +62,42 @@ public class RegionFileLoader {
         }
     }
 
+    /**
+     * Validate that a file is a valid MCA file (checking through the name)
+     */
+    public static boolean isValidMCAFile(Path file) {
+        try {
+            String fileName = file.getFileName().toString();
+            if (!fileName.startsWith("r.") || !fileName.endsWith(".mca")) return false;
+
+            String[] parts = fileName.substring(2, fileName.length() - 4).split("\\.");
+            if (parts.length != 2) return false;
+
+            Integer.parseInt(parts[0]);
+            Integer.parseInt(parts[1]);
+
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Sets up lazy loading for chunks in the given region file
+     */
+    private static void setupLazyLoading(RegionFile regionFile, Path file) {
+        regionFile.setChunkLoader((lX, lZ) -> {
+            try (MCAReader reader = new MCAReader(file)) {
+                RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
+                if (!entry.isEmpty()) return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(),  lX, lZ);
+                return null;
+            }
+        });
+    }
+
+    /**
+     * Parse sections from the given chunk NBT data
+     */
     private static List<Section> parseSections(CompoundTag chunkTag) {
         List<Section> sections = new ArrayList<>();
 
@@ -71,12 +107,15 @@ public class RegionFileLoader {
         for (int i = 0; i < sectionsTag.size(); i++) {
             CompoundTag sectionTag = sectionsTag.getCompound(i);
             Section section = parseSection(sectionTag);
-            if (section != null) sections.add(section);
+            sections.add(section);
         }
 
         return sections;
     }
 
+    /**
+     * Parse a single section from the given NBT data
+     */
     private static Section parseSection(CompoundTag sectionTag) {
         int yIndex = -999;
 
@@ -121,22 +160,5 @@ public class RegionFileLoader {
         if (blockStates == null) blockStates = blockStatesTag.getLongArray("Data", null);
 
         return new Section(yIndex, palette, blockStates);
-    }
-
-    public static boolean isValidMCAFile(Path file) {
-        try {
-            String fileName = file.getFileName().toString();
-            if (!fileName.startsWith("r.") || !fileName.endsWith(".mca")) return false;
-
-            String[] parts = fileName.substring(2, fileName.length() - 4).split("\\.");
-            if (parts.length != 2) return false;
-
-            Integer.parseInt(parts[0]);
-            Integer.parseInt(parts[1]);
-
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 }
