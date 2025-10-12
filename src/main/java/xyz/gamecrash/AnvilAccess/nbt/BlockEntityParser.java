@@ -5,12 +5,20 @@ import xyz.gamecrash.AnvilAccess.nbt.blockentities.base.BlockEntity;
 import xyz.gamecrash.AnvilAccess.nbt.blockentities.base.InventoryBlockEntity;
 import xyz.gamecrash.AnvilAccess.nbt.tags.CompoundTag;
 
+/**
+ * Class for parsing block entities out of NBT
+ */
 public class BlockEntityParser {
+
+    /**
+     * Returns a BlockEntity-Wrapper for given NBT data
+     */
     public static BlockEntity fromNbt(CompoundTag nbt) {
         String id = nbt.getString("id", "unknown");
         BlockEntityType type = BlockEntityType.fromId(id).orElseThrow(() -> new IllegalStateException("Unknown block entity type: " + id));
 
-        // Due to wanted completeness of this list, some block entities are listed in a separated switch-case. The compiler will probably optimize this anyway
+        // Due to wanted "completeness" of this list, some block entities sharing the same class are listed in a separated switch-case
+        // The compiler will probably optimize this anyway
         return switch(type) {
             case BANNER -> new BannerBlockEntity(nbt);
             case BARREL, CHEST, TRAPPED_CHEST, SHULKER_BOX -> new InventoryBlockEntity(nbt);

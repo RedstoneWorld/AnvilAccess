@@ -6,8 +6,14 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * Tag parser for reading NBT data
+ */
 public class TagParser {
 
+    /**
+     * Reads a named NBT tag from the given input stream
+     */
     public static NamedTag readNamed(DataInputStream input) throws IOException {
         byte typeId = input.readByte();
         if (typeId == 0) return new NamedTag("", null);
@@ -19,6 +25,9 @@ public class TagParser {
         return new NamedTag(name, tag);
     }
 
+    /**
+     * Reads an unnamed NBT tag from the given input stream
+     */
     public static Tag readTag(DataInputStream input, TagType type) throws IOException {
         return switch (type) {
             case END -> null;

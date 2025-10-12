@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt;
 
 import lombok.Getter;
 
+/**
+ * Enum representing all existing NBT tag types
+ */
 public enum TagType {
 
     // https://minecraft.wiki/w/NBT_format#TAG_definition
