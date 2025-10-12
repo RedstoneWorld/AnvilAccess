@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.util.compression;
 
 import lombok.Getter;
 
+/**
+ * Enum for existing compression types stored within a chunk header
+ */
 public enum CompressionType {
     GZIP(1),
     ZLIB(2),

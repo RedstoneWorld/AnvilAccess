@@ -9,9 +9,15 @@ import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.InflaterInputStream;
 
+/**
+ * Util class for handling different compression formats used in MCA files
+ */
 public class CompressionUtils {
     private static final LZ4Factory lz4Factory = LZ4Factory.fastestInstance();
 
+    /**
+     * Decompresses data based on compression type
+     */
     public static byte[] decompress(byte[] data, CompressionType compressionType) throws IOException {
         return switch (compressionType) {
             case GZIP -> decompressGzip(data);
@@ -22,6 +28,9 @@ public class CompressionUtils {
         };
     }
 
+    /**
+     * Decompresses Gzip data
+     */
     private static byte[] decompressGzip(byte[] data) throws IOException {
         try (ByteArrayInputStream input = new ByteArrayInputStream(data)) {
             GZIPInputStream gzipIn = new GZIPInputStream(input);
@@ -35,6 +44,9 @@ public class CompressionUtils {
         }
     }
 
+    /**
+     * Decompresses data using Zlib
+     */
     private static byte[] decompressZlib(byte[] data) throws IOException {
         try (ByteArrayInputStream input = new ByteArrayInputStream(data)) {
             InflaterInputStream inflaterIn = new InflaterInputStream(input);
@@ -48,6 +60,11 @@ public class CompressionUtils {
         }
    }
 
+    /**
+     * Decompresses data using LZ4
+     * @apiNote LZ4 requires the decompressed size to be known beforehand.
+     * This implementation assumes the first 4B contain the decompressed size.
+     */
    private static byte[] decompressLz4(byte[] data) throws IOException {
         if (data.length < 4) throw new IOException("Data too short to contain size header");
 

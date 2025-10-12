@@ -5,6 +5,9 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class holding validation results
+ */
 public class ValidationResult {
     @Getter private final List<String> errors = new ArrayList<>();
     @Getter private final List<String> warnings = new ArrayList<>();

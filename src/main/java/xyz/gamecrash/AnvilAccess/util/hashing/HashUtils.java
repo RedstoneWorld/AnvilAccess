@@ -5,7 +5,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.zip.CRC32;
 
+/**
+ * Util class for hashing operations
+ */
 public class HashUtils {
+
+    /**
+     * Generates a SHA-256 hash of the given input
+     */
     public static String sha256(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -16,6 +23,9 @@ public class HashUtils {
         }
     }
 
+    /**
+     * Generates a SHA-256 hash of the given input
+     */
     public static String sha256(byte[] input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -26,6 +36,9 @@ public class HashUtils {
         }
     }
 
+    /**
+     * Generates a MD5 hash of the given input
+     */
     public static String md5(String input) {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
@@ -36,22 +49,34 @@ public class HashUtils {
         }
     }
 
+    /**
+     * Generates a crc32 hash of the given input
+     */
     public static String crc32(byte[] input) {
         CRC32 crc = new CRC32();
         crc.update(input);
         return Long.toHexString(crc.getValue());
     }
 
+    /**
+     * Generates a crc32 hash of the given input
+     */
     public static String crc32(String input) {
         return crc32(input.getBytes());
     }
 
+    /**
+     * Converts byte array to a hex string.
+     */
     private static String bytesToHex(byte[] bytes) {
         StringBuilder result = new StringBuilder();
         for (byte b : bytes) result.append(String.format("%02x", b));
         return result.toString();
     }
 
+    /**
+     * Generates a simple hash code for a long array.
+     */
     public static int hashLongArray(long[] array) {
         if (array == null) return 0;
 
@@ -63,6 +88,9 @@ public class HashUtils {
         return result;
     }
 
+    /**
+     * Generates a fast hash for byte arrays.
+     */
     public static int fastHash(byte[] data) {
         if (data == null) return 0;
 

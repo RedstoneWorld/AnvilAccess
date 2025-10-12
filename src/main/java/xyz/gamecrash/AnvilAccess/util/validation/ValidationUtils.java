@@ -11,7 +11,14 @@ import xyz.gamecrash.AnvilAccess.world.WorldRegionManager;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ * Utility class for validating MCA files, chunks and world structures
+ */
 public class ValidationUtils {
+
+    /**
+     * Returns whether a given region file is valid
+     */
     public static boolean isValidRegionFile(RegionFile regionFile) {
         try {
             if (!Files.exists(regionFile.getFile())) return false;
@@ -22,6 +29,9 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Returns whether a given chunk is valid
+     */
     public static boolean isValidChunk(Chunk chunk) {
         if (chunk == null) return false;
         if (chunk.getNbt() == null) return false;
@@ -29,6 +39,9 @@ public class ValidationUtils {
         return nbt.contains("xPos", TagType.INT) && nbt.contains("zPos", TagType.INT);
     }
 
+    /**
+     * Returns whether a given world is valid
+     */
     public static boolean isValidWorld(WorldRegionManager world) {
         try {
             if (!world.validate()) return false;
@@ -41,6 +54,9 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Validates a region file structure and content
+     */
     public static ValidationResult validateRegionFile(RegionFile regionFile) {
         ValidationResult res = new ValidationResult();
 
@@ -67,6 +83,9 @@ public class ValidationUtils {
         return res;
     }
 
+    /**
+     * Validates a chunk's structure and content
+     */
     public static ValidationResult validateChunk(Chunk chunk) {
         ValidationResult result = new ValidationResult();
 
@@ -85,6 +104,9 @@ public class ValidationUtils {
         return result;
     }
 
+    /**
+     * Validates a world structure.
+     */
     public static ValidationResult validateWorld(WorldRegionManager world) {
         ValidationResult result = new ValidationResult();
 
@@ -109,12 +131,18 @@ public class ValidationUtils {
         return result;
     }
 
+    /**
+     * Validates a chunk entry
+     */
     private static void validateChunkEntry(RegionChunkEntry entry, ValidationResult result, int x, int z) {
         if (entry.offset() < 2) result.addError(String.format("Invalid chunk offset at (%d;%d): %d", x, z, entry.offset()));
         if (entry.sectorCount() <= 0) result.addError(String.format("Invalid sector count at (%d;%d): %d", x, z, entry.sectorCount()));
         if (entry.timestamp() < 0) result.addWarning(String.format("Negative timestamp at (%d;%d): %d", x, z, entry.timestamp()));
     }
 
+    /**
+     * Validates a section's structure
+     */
     private static void validateSection(Section section, ValidationResult result) {
         if (section.getPalette() == null || section.getPalette().isEmpty()) result.addError("Section has empty or null palette");
 
@@ -127,6 +155,9 @@ public class ValidationUtils {
         }
     }
 
+    /**
+     * Validates chunk NBT structure
+     */
     private static void validateChunkNBT(CompoundTag nbt, ValidationResult result) {
         if (!nbt.contains("xPos", TagType.INT)) result.addError("xPos not found");
         if (!nbt.contains("zPos", TagType.INT)) result.addError("zPos not found");
