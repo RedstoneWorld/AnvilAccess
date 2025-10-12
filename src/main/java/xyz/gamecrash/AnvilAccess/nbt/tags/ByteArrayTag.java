@@ -4,6 +4,9 @@ import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
 import java.util.Arrays;
 
+/**
+ * Byte array tag
+ */
 public class ByteArrayTag extends Tag {
     private final byte[] value;
 

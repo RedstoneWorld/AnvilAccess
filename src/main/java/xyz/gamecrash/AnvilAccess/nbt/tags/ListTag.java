@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * List tag storing a list of tags of the same type
+ */
 public class ListTag extends Tag {
     private final List<Tag> tags;
     @Getter private final TagType elementType;
@@ -27,13 +30,22 @@ public class ListTag extends Tag {
         }
     }
 
+    /**
+     * Adds given tag to the list
+     */
     public void add(Tag tag) {
         if (tag.getType() != elementType) throw new IllegalArgumentException("All tags must be of type " + elementType);
         tags.add(tag);
     }
 
+    /**
+     * Gets a tag at given index
+     */
     public Tag get(int index) { return tags.get(index); }
 
+    /**
+     * Gets a compound tag at given index
+     */
     public CompoundTag getCompound(int index) {
         Tag tag = get(index);
         if (tag instanceof CompoundTag compound) return compound;
@@ -41,6 +53,9 @@ public class ListTag extends Tag {
         throw new ClassCastException("List tag type does not match CompoundTag");
     }
 
+    /**
+     * Gets an int tag at given index
+     */
     public int getInt(int index) {
         Tag tag = get(index);
         if (tag instanceof IntTag intTag) return intTag.getValue();
@@ -48,6 +63,9 @@ public class ListTag extends Tag {
         throw new ClassCastException("List tag type does not match IntTag");
     }
 
+    /**
+     * Gets a string tag at given index
+     */
     public String getString(int index) {
         Tag tag = get(index);
         if (tag instanceof StringTag stringTag) return stringTag.getValue();
@@ -55,17 +73,32 @@ public class ListTag extends Tag {
         throw new ClassCastException("List tag type does not match StringTag");
     }
 
+    /**
+     * Set a tag at specified index
+     */
     public void set(int index, Tag tag) {
         if (tag.getType() != elementType) throw new IllegalArgumentException("All tags must be of type " + elementType);
         tags.set(index, tag);
     }
 
+    /**
+     * Remove a list entry at given index
+     */
     public Tag remove(int index) { return tags.remove(index); }
 
+    /**
+     * Gets the size of the list
+     */
     public int size() { return tags.size(); }
 
+    /**
+     * Checks if the list is empty
+     */
     public boolean isEmpty() { return tags.isEmpty(); }
 
+    /**
+     * Returns an iterator over the elements in this list
+     */
     public Iterator<Tag> iterator() { return tags.iterator(); }
 
     @Override

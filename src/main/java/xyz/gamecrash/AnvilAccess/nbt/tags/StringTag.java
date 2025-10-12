@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
+/**
+ * String tag
+ */
 public class StringTag extends Tag {
     private final String value;
 

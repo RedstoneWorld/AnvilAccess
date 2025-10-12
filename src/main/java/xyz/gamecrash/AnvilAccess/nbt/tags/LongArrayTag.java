@@ -4,6 +4,9 @@ import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
 import java.util.Arrays;
 
+/**
+ * Long array tag
+ */
 public class LongArrayTag extends Tag {
     private final long[] value;
 

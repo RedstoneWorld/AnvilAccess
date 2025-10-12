@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
+/**
+ * Double tag
+ */
 public class DoubleTag extends Tag {
     private final double value;
 

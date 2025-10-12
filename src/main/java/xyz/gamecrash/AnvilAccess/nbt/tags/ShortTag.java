@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
+/**
+ * Short tag
+ */
 public class ShortTag extends Tag {
     private final short value;
 

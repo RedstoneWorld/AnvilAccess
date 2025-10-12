@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
+/**
+ * Float tag
+ */
 public class FloatTag extends Tag {
     private final float value;
 

@@ -2,6 +2,9 @@ package xyz.gamecrash.AnvilAccess.nbt.tags;
 
 import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
+/**
+ * Int tag
+ */
 public class IntTag extends Tag {
     private final int value;
 

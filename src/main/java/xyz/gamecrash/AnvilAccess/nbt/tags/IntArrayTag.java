@@ -4,6 +4,9 @@ import xyz.gamecrash.AnvilAccess.nbt.TagType;
 
 import java.util.Arrays;
 
+/**
+ * Int array tag
+ */
 public class IntArrayTag extends Tag {
     private final int[] value;
 
