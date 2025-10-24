@@ -75,7 +75,8 @@ public class TagParser {
         TagType type = TagType.fromId(typeId);
         ListTag list = new ListTag(type);
         for (int i = 0; i < length; i++) {
-            list.add(readTag(input, type));
+            Tag tag = readTag(input, type);
+            if (tag != null) list.add(tag);
         }
 
         return list;

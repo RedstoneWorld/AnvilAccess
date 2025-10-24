@@ -15,7 +15,7 @@ public class DecoratedPotBlockEntity extends BlockEntity {
     public List<String> getSherds() {
         return getList("sherds")
             .map(tag -> IntStream.range(0, tag.size())
-                .mapToObj(i -> tag.getString(i))
+                .mapToObj(tag::getString)
                 .collect(Collectors.toList()))
             .orElse(List.of());
     }

@@ -11,7 +11,7 @@ import java.util.zip.CRC32;
 public class HashUtils {
 
     /**
-     * Generates a SHA-256 hash of the given input
+     * Generates an SHA-256 hash of the given input
      */
     public static String sha256(String input) {
         try {
@@ -24,7 +24,7 @@ public class HashUtils {
     }
 
     /**
-     * Generates a SHA-256 hash of the given input
+     * Generates an SHA-256 hash of the given input
      */
     public static String sha256(byte[] input) {
         try {

@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Represents a MCA region file containing a 32x32 grid of chunks.
+ * Represents an MCA region file containing a 32x32 grid of chunks.
  */
 @Getter @RequiredArgsConstructor
 public class RegionFile {

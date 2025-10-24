@@ -1,7 +1,7 @@
 package xyz.gamecrash.anvilaccess.model;
 
 /**
- * Represents a single chunk entry in a MCA region file header.
+ * Represents a single chunk entry in an MCA region file header.
  */
 public record RegionChunkEntry(int offset, int sectorCount, int timestamp) {
 

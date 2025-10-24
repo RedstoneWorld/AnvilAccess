@@ -51,7 +51,7 @@ public class MCAReader implements AutoCloseable {
             int[] timestamps = new int[1024];
             for (int i = 0; i < 1024; i++) timestamps[i] = input.readInt();
 
-            // create entires
+            // create entries
             for (int i = 0; i < 1024; i++) entries[i] = new RegionChunkEntry(offsets[i], sectorCounts[i], timestamps[i]);
         }
 

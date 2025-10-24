@@ -120,9 +120,8 @@ public class RegionFileLoader {
         int yIndex = -999;
 
         try {
-            yIndex = sectionTag.getByte("Y", (byte) - 99);
-            if (yIndex != -99) { }
-            else {
+            yIndex = sectionTag.getByte("Y", (byte) -99);
+            if (yIndex == -99) {
                 yIndex = sectionTag.getInt("Y", -999);
                 if (yIndex == -999) yIndex = sectionTag.getShort("Y", (short) -999);
             }
@@ -134,9 +133,7 @@ public class RegionFileLoader {
         if (yIndex == -999 || yIndex == -99) {
             System.out.println("Could not find Y index in section.");
             Tag yTag = sectionTag.get("Y");
-            if (yTag != null) {
-                System.out.println("Y tag type: " + yTag.getType() + ", value: " + yTag.getValue());
-            }
+            if (yTag != null) System.out.println("Y tag type: " + yTag.getType() + ", value: " + yTag.getValue());
             yIndex = 0;
         }
 

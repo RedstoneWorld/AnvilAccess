@@ -9,8 +9,8 @@ import java.util.List;
  * Represents a 16x16x16 section of blocks within a chunk.
  * Handles palette-based block storage and bit-packed block states
  */
-@Getter
-@RequiredArgsConstructor
+@SuppressWarnings("ClassCanBeRecord")
+@Getter @RequiredArgsConstructor
 public class Section {
     private final int yIndex;
     private final List<BlockState> palette;

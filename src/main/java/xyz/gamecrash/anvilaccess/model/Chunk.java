@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 /**
  * Represents a chunk with its sections and NBT data.
  */
+@SuppressWarnings("ClassCanBeRecord")
 @Getter @RequiredArgsConstructor
 public class Chunk {
     private final int chunkX;
@@ -98,7 +99,8 @@ public class Chunk {
      */
     public List<CompoundTag> getBlockEntityCompounds() {
         ListTag blockEntityTag = nbt.getList("block_entities", new ListTag(TagType.COMPOUND));
-        if (blockEntityTag == null || blockEntityTag.isEmpty()) blockEntityTag = nbt.getList("TileEntities", new ListTag(TagType.COMPOUND)); // legacy format
+        if (blockEntityTag == null || blockEntityTag.isEmpty())
+            blockEntityTag = nbt.getList("TileEntities", new ListTag(TagType.COMPOUND)); // legacy format
         if (blockEntityTag == null) return List.of();
 
         List<CompoundTag> blockEntities = new ArrayList<>();
@@ -121,6 +123,7 @@ public class Chunk {
 
     /**
      * Gets a block entity at the given world coordinates
+     *
      * @param x World X Coord
      * @param y World Y Coord
      * @param z World Z Coord
