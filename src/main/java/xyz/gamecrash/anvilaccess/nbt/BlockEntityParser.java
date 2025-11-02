@@ -19,7 +19,7 @@ public class BlockEntityParser {
 
         // Due to wanted "completeness" of this list, some block entities sharing the same class are listed in a separated switch-case
         // The compiler will probably optimize this anyway
-        return switch(type) {
+        return switch (type) {
             case BANNER -> new BannerBlockEntity(nbt);
             case BARREL, CHEST, TRAPPED_CHEST, SHULKER_BOX -> new InventoryBlockEntity(nbt);
             case BEACON -> new BeaconBlockEntity(nbt);
@@ -27,7 +27,7 @@ public class BlockEntityParser {
             case BEEHIVE, BEE_NEST -> new BeehiveBlockEntity(nbt);
             case BELL -> new BlockEntity(nbt);
             case BLAST_FURNACE, FURNACE, SMOKER -> new FurnaceBlockEntity(nbt);
-            case BREWING_STAND ->  new BrewingStandBlockEntity(nbt);
+            case BREWING_STAND -> new BrewingStandBlockEntity(nbt);
             case SUSPICIOUS_SAND, SUSPICIOUS_GRAVEL -> new BrushableBlockEntity(nbt);
             case CALIBRATED_SCULK_SENSOR, SCULK_SENSOR -> new SculkBlockEntity(nbt);
             case CAMPFIRE, SOUL_CAMPFIRE -> new CampfireBlockEntity(nbt);
@@ -48,7 +48,7 @@ public class BlockEntityParser {
             case HANGING_SIGN, SIGN -> new SignBlockEntity(nbt);
             case HOPPER -> new HopperBlockEntity(nbt);
             case JIGSAW -> new BlockEntity(nbt); // Not yet implemented
-            case JUKEBOX ->  new JukeboxBlockEntity(nbt);
+            case JUKEBOX -> new JukeboxBlockEntity(nbt);
             case LECTERN -> new LecternBlockEntity(nbt);
             case MOB_SPAWNER -> new SpawnerBlockEntity(nbt);
             case MOVING_PISTON -> new MovingPistonBlockEntity(nbt);

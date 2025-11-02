@@ -66,9 +66,11 @@ public class ValidationUtils {
                 return res;
             }
 
-            if (Files.size(regionFile.getFile()) < 8192) res.addError("Region file size is smaller than the minimum required size of 8192 bytes");
+            if (Files.size(regionFile.getFile()) < 8192)
+                res.addError("Region file size is smaller than the minimum required size of 8192 bytes");
             if (regionFile.getChunkCount() < 1) res.addWarning("Region file contains no chunks");
-            else if (regionFile.getChunkCount() > 1024) res.addError("Region file contains too many chunks (max: 32*32)");
+            else if (regionFile.getChunkCount() > 1024)
+                res.addError("Region file contains too many chunks (max: 32*32)");
 
             for (int z = 0; z < 32; z++) {
                 for (int x = 0; x < 32; x++) {
@@ -135,16 +137,20 @@ public class ValidationUtils {
      * Validates a chunk entry
      */
     private static void validateChunkEntry(RegionChunkEntry entry, ValidationResult result, int x, int z) {
-        if (entry.offset() < 2) result.addError(String.format("Invalid chunk offset at (%d;%d): %d", x, z, entry.offset()));
-        if (entry.sectorCount() <= 0) result.addError(String.format("Invalid sector count at (%d;%d): %d", x, z, entry.sectorCount()));
-        if (entry.timestamp() < 0) result.addWarning(String.format("Negative timestamp at (%d;%d): %d", x, z, entry.timestamp()));
+        if (entry.offset() < 2)
+            result.addError(String.format("Invalid chunk offset at (%d;%d): %d", x, z, entry.offset()));
+        if (entry.sectorCount() <= 0)
+            result.addError(String.format("Invalid sector count at (%d;%d): %d", x, z, entry.sectorCount()));
+        if (entry.timestamp() < 0)
+            result.addWarning(String.format("Negative timestamp at (%d;%d): %d", x, z, entry.timestamp()));
     }
 
     /**
      * Validates a section's structure
      */
     private static void validateSection(Section section, ValidationResult result) {
-        if (section.getPalette() == null || section.getPalette().isEmpty()) result.addError("Section has empty or null palette");
+        if (section.getPalette() == null || section.getPalette().isEmpty())
+            result.addError("Section has empty or null palette");
 
         int yIndex = section.getYIndex();
         if (yIndex < -20 || yIndex > 50) result.addWarning("Unusual Y index for section: " + yIndex);

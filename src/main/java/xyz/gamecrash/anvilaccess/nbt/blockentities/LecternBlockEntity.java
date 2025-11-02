@@ -7,9 +7,15 @@ import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 import java.util.Optional;
 
 public class LecternBlockEntity extends BlockEntity {
-    public LecternBlockEntity(CompoundTag nbt) { super(nbt); }
+    public LecternBlockEntity(CompoundTag nbt) {
+        super(nbt);
+    }
 
-    public Optional<ItemStack> getBook() { return getCompound("Book").map(ItemStack::new); }
+    public Optional<ItemStack> getBook() {
+        return getCompound("Book").map(ItemStack::new);
+    }
 
-    public int getPage() { return getInt("Page"); }
+    public int getPage() {
+        return getInt("Page");
+    }
 }

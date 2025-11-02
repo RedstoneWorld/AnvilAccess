@@ -23,7 +23,7 @@ public class CompressionUtils {
             case GZIP -> decompressGzip(data);
             case ZLIB -> decompressZlib(data);
             case UNCOMPRESSED -> data;
-            case LZ4 ->  decompressLz4(data);
+            case LZ4 -> decompressLz4(data);
             case ANY -> throw new UnsupportedOperationException("Compression type 127 is not supported");
         };
     }
@@ -58,7 +58,7 @@ public class CompressionUtils {
 
             return output.toByteArray();
         }
-   }
+    }
 
     /**
      * Decompresses data using LZ4
@@ -67,19 +67,20 @@ public class CompressionUtils {
      * This implementation assumes the first 4B contain the decompressed size.
      * </p>
      */
-   private static byte[] decompressLz4(byte[] data) throws IOException {
+    private static byte[] decompressLz4(byte[] data) throws IOException {
         if (data.length < 4) throw new IOException("Data too short to contain size header");
 
         int decompressedSize = ((data[0] & 0xFF) << 24) |
             ((data[1] & 0xFF) << 16) |
             ((data[2] & 0xFF) << 8) |
             (data[3] & 0xFF);
-        if (decompressedSize < 1 || decompressedSize > 100 * 1024 * 1024) throw new IOException("Invalid decompressed size: " + decompressedSize);
+        if (decompressedSize < 1 || decompressedSize > 100 * 1024 * 1024)
+            throw new IOException("Invalid decompressed size: " + decompressedSize);
 
-       LZ4FastDecompressor decompressor = lz4Factory.fastDecompressor();
-       byte[] compressed = new byte[data.length - 4];
-       System.arraycopy(data, 4, compressed, 0, compressed.length);
+        LZ4FastDecompressor decompressor = lz4Factory.fastDecompressor();
+        byte[] compressed = new byte[data.length - 4];
+        System.arraycopy(data, 4, compressed, 0, compressed.length);
 
-       return decompressor.decompress(compressed, decompressedSize);
-   }
+        return decompressor.decompress(compressed, decompressedSize);
+    }
 }

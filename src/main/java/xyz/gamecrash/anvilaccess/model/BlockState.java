@@ -15,17 +15,23 @@ public record BlockState(String id, Map<String, String> properties) {
     /**
      * Creates a BlockState with no properties
      */
-    public BlockState(String id) { this(id, Map.of()); }
+    public BlockState(String id) {
+        this(id, Map.of());
+    }
 
     /**
      * Gets a property from the block state, e.g. the facing of a furnace
      */
-    public String getProperty(String key) { return properties.get(key); }
+    public String getProperty(String key) {
+        return properties.get(key);
+    }
 
     /**
      * Gets a property from the block state, with a default value if the property is not set
      */
-    public String getProperty(String key, String defaultValue) { return properties.getOrDefault(key, defaultValue); }
+    public String getProperty(String key, String defaultValue) {
+        return properties.getOrDefault(key, defaultValue);
+    }
 
     @Override
     public String toString() {
@@ -36,7 +42,7 @@ public record BlockState(String id, Map<String, String> properties) {
         properties.entrySet().stream()
             .sorted(Map.Entry.comparingByKey())
             .forEach(entry -> builder.append(entry.getKey()).append("=").append(entry.getValue()).append(",")
-        );
+            );
         builder.setCharAt(builder.length() - 1, ']');
 
         return builder.toString();

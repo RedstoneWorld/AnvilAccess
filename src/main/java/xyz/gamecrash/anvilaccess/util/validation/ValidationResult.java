@@ -9,21 +9,36 @@ import java.util.List;
  * Class holding validation results
  */
 public class ValidationResult {
-    @Getter private final List<String> errors = new ArrayList<>();
-    @Getter private final List<String> warnings = new ArrayList<>();
-    @Getter private final List<String> infos = new ArrayList<>();
+    @Getter
+    private final List<String> errors = new ArrayList<>();
+    @Getter
+    private final List<String> warnings = new ArrayList<>();
+    @Getter
+    private final List<String> infos = new ArrayList<>();
 
-    public void addError(String error) { errors.add(error); }
+    public void addError(String error) {
+        errors.add(error);
+    }
 
-    public void addWarning(String warning) { warnings.add(warning); }
+    public void addWarning(String warning) {
+        warnings.add(warning);
+    }
 
-    public void addInfo(String info) { infos.add(info); }
+    public void addInfo(String info) {
+        infos.add(info);
+    }
 
-    public boolean isValid() { return errors.isEmpty();}
+    public boolean isValid() {
+        return errors.isEmpty();
+    }
 
-    public boolean hasErrors() { return !errors.isEmpty(); }
+    public boolean hasErrors() {
+        return !errors.isEmpty();
+    }
 
-    public boolean hasWarnings() { return !warnings.isEmpty(); }
+    public boolean hasWarnings() {
+        return !warnings.isEmpty();
+    }
 
     public void merge(ValidationResult other, String prefix) {
         other.errors.forEach(err -> this.addError(prefix + ":" + err));

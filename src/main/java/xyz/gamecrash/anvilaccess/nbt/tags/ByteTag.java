@@ -14,11 +14,17 @@ public class ByteTag extends Tag {
     }
 
     @Override
-    public Byte getValue() { return value; }
+    public Byte getValue() {
+        return value;
+    }
 
     @Override
-    public ByteTag copy() { return new ByteTag(value); }
+    public ByteTag copy() {
+        return new ByteTag(value);
+    }
 
     @Override
-    public String toString() { return value + "b"; }
+    public String toString() {
+        return value + "b";
+    }
 }

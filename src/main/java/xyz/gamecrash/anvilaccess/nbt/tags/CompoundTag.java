@@ -23,17 +23,23 @@ public class CompoundTag extends Tag {
     /**
      * Puts a tag with given name
      */
-    public void put(String name, Tag tag) { tags.put(name, tag); }
+    public void put(String name, Tag tag) {
+        tags.put(name, tag);
+    }
 
     /**
      * Gets a tag by given name
      */
-    public Tag get(String name) { return tags.get(name); }
+    public Tag get(String name) {
+        return tags.get(name);
+    }
 
     /**
      * Checks if a tag with given name exists
      */
-    public boolean contains(String name) { return tags.containsKey(name); }
+    public boolean contains(String name) {
+        return tags.containsKey(name);
+    }
 
     /**
      * Checks if a tag with given name and type exists
@@ -46,22 +52,30 @@ public class CompoundTag extends Tag {
     /**
      * Removes a tag with given name
      */
-    public Tag remove(String name) { return tags.remove(name); }
+    public Tag remove(String name) {
+        return tags.remove(name);
+    }
 
     /**
      * Returns a set containing all tag names
      */
-    public Set<String> getKeys() { return new HashSet<>(tags.keySet()); }
+    public Set<String> getKeys() {
+        return new HashSet<>(tags.keySet());
+    }
 
     /**
      * Gets number of tags
      */
-    public int size() { return tags.size(); }
+    public int size() {
+        return tags.size();
+    }
 
     /**
      * Checks if compound is empty
      */
-    public boolean isEmpty() { return tags.isEmpty(); }
+    public boolean isEmpty() {
+        return tags.isEmpty();
+    }
 
     /**
      * Gets a byte value, with a fallback value
@@ -187,7 +201,9 @@ public class CompoundTag extends Tag {
      * Returns the key-value-pair of this NBT compound
      */
     @Override
-    public Map<String, Tag> getValue() { return new HashMap<>(tags); }
+    public Map<String, Tag> getValue() {
+        return new HashMap<>(tags);
+    }
 
     @Override
     public CompoundTag copy() {

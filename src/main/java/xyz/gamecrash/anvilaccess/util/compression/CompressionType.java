@@ -12,9 +12,12 @@ public enum CompressionType {
     LZ4(4),
     ANY(127);
 
-    @Getter private final int id;
+    @Getter
+    private final int id;
 
-    CompressionType(int id) { this.id = id; }
+    CompressionType(int id) {
+        this.id = id;
+    }
 
     public static CompressionType fromId(int id) {
         for (CompressionType type : values()) {

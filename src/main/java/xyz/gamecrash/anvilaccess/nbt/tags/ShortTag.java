@@ -14,11 +14,17 @@ public class ShortTag extends Tag {
     }
 
     @Override
-    public Short getValue() { return value; }
+    public Short getValue() {
+        return value;
+    }
 
     @Override
-    public ShortTag copy() { return new ShortTag(value); }
+    public ShortTag copy() {
+        return new ShortTag(value);
+    }
 
     @Override
-    public String toString() { return value + "s"; }
+    public String toString() {
+        return value + "s";
+    }
 }

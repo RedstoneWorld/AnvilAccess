@@ -14,11 +14,17 @@ public class DoubleTag extends Tag {
     }
 
     @Override
-    public Double getValue() { return value; }
+    public Double getValue() {
+        return value;
+    }
 
     @Override
-    public DoubleTag copy() { return new DoubleTag(value); }
+    public DoubleTag copy() {
+        return new DoubleTag(value);
+    }
 
     @Override
-    public String toString() { return value + "d"; }
+    public String toString() {
+        return value + "d";
+    }
 }

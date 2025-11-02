@@ -12,7 +12,8 @@ import java.util.List;
  */
 public class ListTag extends Tag {
     private final List<Tag> tags;
-    @Getter private final TagType elementType;
+    @Getter
+    private final TagType elementType;
 
     public ListTag(TagType elementType) {
         super(TagType.LIST);
@@ -26,7 +27,8 @@ public class ListTag extends Tag {
         this.tags = new ArrayList<>(tags);
 
         for (Tag tag : tags) {
-            if (tag.getType() != elementType) throw new IllegalArgumentException("All tags must be of type " + elementType);
+            if (tag.getType() != elementType)
+                throw new IllegalArgumentException("All tags must be of type " + elementType);
         }
     }
 
@@ -41,7 +43,9 @@ public class ListTag extends Tag {
     /**
      * Gets a tag at given index
      */
-    public Tag get(int index) { return tags.get(index); }
+    public Tag get(int index) {
+        return tags.get(index);
+    }
 
     /**
      * Gets a compound tag at given index
@@ -84,25 +88,35 @@ public class ListTag extends Tag {
     /**
      * Remove a list entry at given index
      */
-    public Tag remove(int index) { return tags.remove(index); }
+    public Tag remove(int index) {
+        return tags.remove(index);
+    }
 
     /**
      * Gets the size of the list
      */
-    public int size() { return tags.size(); }
+    public int size() {
+        return tags.size();
+    }
 
     /**
      * Checks if the list is empty
      */
-    public boolean isEmpty() { return tags.isEmpty(); }
+    public boolean isEmpty() {
+        return tags.isEmpty();
+    }
 
     /**
      * Returns an iterator over the elements in this list
      */
-    public Iterator<Tag> iterator() { return tags.iterator(); }
+    public Iterator<Tag> iterator() {
+        return tags.iterator();
+    }
 
     @Override
-    public List<Tag> getValue() { return new ArrayList<>(tags); }
+    public List<Tag> getValue() {
+        return new ArrayList<>(tags);
+    }
 
     @Override
     public ListTag copy() {

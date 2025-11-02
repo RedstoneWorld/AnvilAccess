@@ -2,10 +2,7 @@ package xyz.gamecrash.anvilaccess.io;
 
 import xyz.gamecrash.anvilaccess.model.*;
 import xyz.gamecrash.anvilaccess.nbt.*;
-import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
-import xyz.gamecrash.anvilaccess.nbt.tags.ListTag;
-import xyz.gamecrash.anvilaccess.nbt.tags.NamedTag;
-import xyz.gamecrash.anvilaccess.nbt.tags.Tag;
+import xyz.gamecrash.anvilaccess.nbt.tags.*;
 import xyz.gamecrash.anvilaccess.util.block.BlockStateDecoder;
 
 import java.io.ByteArrayInputStream;
@@ -25,7 +22,8 @@ public class RegionFileLoader {
      */
     public static RegionFile loadRegion(Path file) throws IOException {
         String fileName = file.getFileName().toString();
-        if (!fileName.startsWith("r.") || !fileName.endsWith(".mca")) throw new IllegalArgumentException("Invalid region file name: " + fileName);
+        if (!fileName.startsWith("r.") || !fileName.endsWith(".mca"))
+            throw new IllegalArgumentException("Invalid region file name: " + fileName);
 
         String[] parts = fileName.substring(2, fileName.length() - 4).split("\\.");
         if (parts.length != 2) throw new IllegalArgumentException("Invalid region file name format: " + fileName);
@@ -52,7 +50,8 @@ public class RegionFileLoader {
 
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(decompressed))) {
             NamedTag namedTag = TagParser.readNamed(input);
-            if (!(namedTag.tag() instanceof CompoundTag rootTag)) throw new IOException("Root tag is not a compound tag");
+            if (!(namedTag.tag() instanceof CompoundTag rootTag))
+                throw new IOException("Root tag is not a compound tag");
 
             int cX = regionX * 32 + localX;
             int cZ = regionZ * 32 + localZ;
@@ -89,7 +88,8 @@ public class RegionFileLoader {
         regionFile.setChunkLoader((lX, lZ) -> {
             try (MCAReader reader = new MCAReader(file)) {
                 RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
-                if (!entry.isEmpty()) return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(),  lX, lZ);
+                if (!entry.isEmpty())
+                    return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(), lX, lZ);
                 return null;
             }
         });
@@ -141,7 +141,8 @@ public class RegionFileLoader {
         if (blockStatesTag == null) return new Section(yIndex, List.of(new BlockState("minecraft:air")), null);
 
         ListTag paletteTag = blockStatesTag.getList("palette", new ListTag(TagType.COMPOUND));
-        if (paletteTag == null || paletteTag.isEmpty()) paletteTag = blockStatesTag.getList("Palette", new ListTag(TagType.COMPOUND));
+        if (paletteTag == null || paletteTag.isEmpty())
+            paletteTag = blockStatesTag.getList("Palette", new ListTag(TagType.COMPOUND));
 
         List<BlockState> palette = new ArrayList<>();
 
@@ -150,6 +151,7 @@ public class RegionFileLoader {
             BlockState blockState = BlockStateDecoder.decodeBlockState(blockStateTag);
             palette.add(blockState);
         }
+
         if (palette.isEmpty()) palette.add(new BlockState("minecraft:air"));
 
         long[] blockStates = blockStatesTag.getLongArray("data", null);

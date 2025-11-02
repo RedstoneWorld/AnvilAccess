@@ -16,13 +16,19 @@ public class LongArrayTag extends Tag {
     }
 
     @Override
-    public long[] getValue() { return value.clone(); }
+    public long[] getValue() {
+        return value.clone();
+    }
 
     @Override
-    public LongArrayTag copy() { return new LongArrayTag(value); }
+    public LongArrayTag copy() {
+        return new LongArrayTag(value);
+    }
 
     @Override
-    public String toString() { return "[L;" + value.length + " longs]"; }
+    public String toString() {
+        return "[L;" + value.length + " longs]";
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -32,5 +38,7 @@ public class LongArrayTag extends Tag {
     }
 
     @Override
-    public int hashCode() { return Arrays.hashCode(value); }
+    public int hashCode() {
+        return Arrays.hashCode(value);
+    }
 }

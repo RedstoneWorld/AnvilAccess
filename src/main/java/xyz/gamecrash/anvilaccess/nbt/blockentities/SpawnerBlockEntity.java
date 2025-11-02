@@ -4,17 +4,31 @@ import xyz.gamecrash.anvilaccess.nbt.blockentities.base.BlockEntity;
 import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 
 public class SpawnerBlockEntity extends BlockEntity {
-    public SpawnerBlockEntity(CompoundTag nbt) { super(nbt); }
+    public SpawnerBlockEntity(CompoundTag nbt) {
+        super(nbt);
+    }
 
-    public CompoundTag getSpawnData() { return getNbt().getCompound("SpawnData", null); }
+    public CompoundTag getSpawnData() {
+        return getNbt().getCompound("SpawnData", null);
+    }
 
-    public short getDelay() { return getNbt().getShort("Delay", (short) 20); }
+    public short getDelay() {
+        return getNbt().getShort("Delay", (short) 20);
+    }
 
-    public short getMinSpawnDelay() { return getNbt().getShort("MinSpawnDelay", (short) 200); }
+    public short getMinSpawnDelay() {
+        return getNbt().getShort("MinSpawnDelay", (short) 200);
+    }
 
-    public short getMaxSpawnDelay() { return getNbt().getShort("MaxSpawnDelay", (short) 800); }
+    public short getMaxSpawnDelay() {
+        return getNbt().getShort("MaxSpawnDelay", (short) 800);
+    }
 
-    public short getMaxNearbyEntities() { return getNbt().getShort("MaxNearbyEntities", (short) 0); }
+    public short getMaxNearbyEntities() {
+        return getNbt().getShort("MaxNearbyEntities", (short) 0);
+    }
 
-    public short getRequiredPlayerRange() { return getNbt().getShort("RequiredPlayerRange", (short) 16); }
+    public short getRequiredPlayerRange() {
+        return getNbt().getShort("RequiredPlayerRange", (short) 16);
+    }
 }

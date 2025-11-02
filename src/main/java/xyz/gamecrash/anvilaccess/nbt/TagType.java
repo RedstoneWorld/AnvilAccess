@@ -22,9 +22,12 @@ public enum TagType {
     INT_ARRAY(11),
     LONG_ARRAY(12);
 
-    @Getter private final int id;
+    @Getter
+    private final int id;
 
-    TagType(int id) { this.id = id; }
+    TagType(int id) {
+        this.id = id;
+    }
 
     public static TagType fromId(int id) {
         for (TagType type : values()) {

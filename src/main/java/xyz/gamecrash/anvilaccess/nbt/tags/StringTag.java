@@ -14,11 +14,17 @@ public class StringTag extends Tag {
     }
 
     @Override
-    public String getValue() { return value; }
+    public String getValue() {
+        return value;
+    }
 
     @Override
-    public StringTag copy() { return new StringTag(value); }
+    public StringTag copy() {
+        return new StringTag(value);
+    }
 
     @Override
-    public String toString() { return "\"" + value + "\""; }
+    public String toString() {
+        return "\"" + value + "\"";
+    }
 }

@@ -14,11 +14,17 @@ public class LongTag extends Tag {
     }
 
     @Override
-    public Long getValue() { return value; }
+    public Long getValue() {
+        return value;
+    }
 
     @Override
-    public LongTag copy() { return new LongTag(value); }
+    public LongTag copy() {
+        return new LongTag(value);
+    }
 
     @Override
-    public String toString() { return value + "L"; }
+    public String toString() {
+        return value + "L";
+    }
 }

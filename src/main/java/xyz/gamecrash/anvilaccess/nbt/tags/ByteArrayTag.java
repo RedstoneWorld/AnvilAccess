@@ -16,13 +16,19 @@ public class ByteArrayTag extends Tag {
     }
 
     @Override
-    public byte[] getValue() { return value.clone(); }
+    public byte[] getValue() {
+        return value.clone();
+    }
 
     @Override
-    public ByteArrayTag copy() { return new ByteArrayTag(value); }
+    public ByteArrayTag copy() {
+        return new ByteArrayTag(value);
+    }
 
     @Override
-    public String toString() { return "[B;" + value.length + " bytes]" ; }
+    public String toString() {
+        return "[B;" + value.length + " bytes]";
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -32,5 +38,7 @@ public class ByteArrayTag extends Tag {
     }
 
     @Override
-    public int hashCode() { return Arrays.hashCode(value); }
+    public int hashCode() {
+        return Arrays.hashCode(value);
+    }
 }

@@ -15,7 +15,8 @@ import java.util.stream.Stream;
 /**
  * Represents an MCA region file containing a 32x32 grid of chunks.
  */
-@Getter @RequiredArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class RegionFile {
     private final Path file;
     private final int regionX;
@@ -23,7 +24,8 @@ public class RegionFile {
     private final RegionChunkEntry[] entries;
     private final Chunk[] chunks;
 
-    @Setter private ChunkLoader chunkLoader;
+    @Setter
+    private ChunkLoader chunkLoader;
 
     public RegionFile(Path file, int regionX, int regionZ, RegionChunkEntry[] entries) {
         this.file = file;
@@ -35,6 +37,7 @@ public class RegionFile {
 
     /**
      * Gets a chunk at the given local coordinates within this region
+     *
      * @param localX Local X coordinate within region (0-31)
      * @param localZ Local Z coordinate within region (0-31)
      * @return Optional containing the chunk, if it exists
@@ -65,6 +68,7 @@ public class RegionFile {
 
     /**
      * Gets a chunk at world chunk coordinates
+     *
      * @param worldX World chunk X coordinate
      * @param worldZ World chunk Z coordinate
      * @return Optional containing the chunk, if it exists in this region
@@ -82,7 +86,8 @@ public class RegionFile {
      * Gets the RegionChunkEntry at the given local coordinates
      */
     public RegionChunkEntry getEntry(int localX, int localZ) {
-        if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) throw new IllegalArgumentException("Chunk coordinates out of bounds");
+        if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31)
+            throw new IllegalArgumentException("Chunk coordinates out of bounds");
 
         return entries[localZ * 32 + localX];
     }
@@ -137,19 +142,30 @@ public class RegionFile {
     public int getMinWorldChunkX() {
         return regionX * 32;
     }
-    /**{@link #getMinWorldChunkX() comment of here}*/
+
+    /**
+     * {@link #getMinWorldChunkX() comment of here}
+     */
     public int getMaxWorldChunkX() {
         return regionX * 32 + 31;
     }
-    /**{@link #getMinWorldChunkX() comment of here}*/
+
+    /**
+     * {@link #getMinWorldChunkX() comment of here}
+     */
     public int getMinWorldChunkZ() {
         return regionZ * 32;
     }
-    /**{@link #getMinWorldChunkX() comment of here}*/
+
+    /**
+     * {@link #getMinWorldChunkX() comment of here}
+     */
     public int getMaxWorldChunkZ() {
         return regionZ * 32 + 31;
     }
 
     @Override
-    public String toString() { return String.format("RegionFile(%d;%d)[File:%s;ChunkCount:%d]", regionX, regionZ, file.getFileName(), getChunkCount()); }
+    public String toString() {
+        return String.format("RegionFile(%d;%d)[File:%s;ChunkCount:%d]", regionX, regionZ, file.getFileName(), getChunkCount());
+    }
 }

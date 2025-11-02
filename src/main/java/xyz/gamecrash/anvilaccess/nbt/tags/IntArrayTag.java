@@ -16,13 +16,19 @@ public class IntArrayTag extends Tag {
     }
 
     @Override
-    public int[] getValue() { return value.clone(); }
+    public int[] getValue() {
+        return value.clone();
+    }
 
     @Override
-    public IntArrayTag copy() { return new IntArrayTag(value); }
+    public IntArrayTag copy() {
+        return new IntArrayTag(value);
+    }
 
     @Override
-    public String toString() { return "[I;" + value.length + " ints]"; }
+    public String toString() {
+        return "[I;" + value.length + " ints]";
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -32,5 +38,7 @@ public class IntArrayTag extends Tag {
     }
 
     @Override
-    public int hashCode() { return Arrays.hashCode(value); }
+    public int hashCode() {
+        return Arrays.hashCode(value);
+    }
 }

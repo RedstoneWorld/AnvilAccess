@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class SignBlockEntity extends BlockEntity {
-    public SignBlockEntity(CompoundTag nbt) { super(nbt); }
+    public SignBlockEntity(CompoundTag nbt) {
+        super(nbt);
+    }
 
     public List<String> getTextLines(boolean backSide) {
         return List.of(
@@ -41,7 +43,11 @@ public class SignBlockEntity extends BlockEntity {
         return compound.filter(compoundTag -> compoundTag.getByte("has_glowing_text", (byte) 0) == 1).isPresent();
     }
 
-    public boolean isWaxed() { return getByte("is_waxed") == 1; }
+    public boolean isWaxed() {
+        return getByte("is_waxed") == 1;
+    }
 
-    public String getFullText(boolean back) { return String.join("\n", getTextLines(back)); }
+    public String getFullText(boolean back) {
+        return String.join("\n", getTextLines(back));
+    }
 }

@@ -14,11 +14,17 @@ public class IntTag extends Tag {
     }
 
     @Override
-    public Integer getValue() { return value; }
+    public Integer getValue() {
+        return value;
+    }
 
     @Override
-    public IntTag copy() { return new IntTag(value); }
+    public IntTag copy() {
+        return new IntTag(value);
+    }
 
     @Override
-    public String toString() { return String.valueOf(value); }
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

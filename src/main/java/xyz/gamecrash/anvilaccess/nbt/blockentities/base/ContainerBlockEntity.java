@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public abstract class ContainerBlockEntity extends BlockEntity {
-    public ContainerBlockEntity(CompoundTag nbt) { super(nbt); }
+    public ContainerBlockEntity(CompoundTag nbt) {
+        super(nbt);
+    }
 
     public List<SlotItemStack> getItems() {
         return getList("Items")

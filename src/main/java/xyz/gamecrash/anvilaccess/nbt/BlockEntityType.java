@@ -74,9 +74,12 @@ public enum BlockEntityType {
     TRIAL_SPAWNER("minecraft:trial_spawner"),
     VAULT("minecraft:vault");
 
-    @Getter private final Set<String> id;
+    @Getter
+    private final Set<String> id;
 
-    BlockEntityType(String... id) { this.id = java.util.Set.of(id); }
+    BlockEntityType(String... id) {
+        this.id = java.util.Set.of(id);
+    }
 
     public static Optional<BlockEntityType> fromId(String id) {
         return java.util.Arrays.stream(values())

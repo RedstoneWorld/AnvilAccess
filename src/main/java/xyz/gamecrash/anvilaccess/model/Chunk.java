@@ -17,7 +17,8 @@ import java.util.stream.Collectors;
  * Represents a chunk with its sections and NBT data.
  */
 @SuppressWarnings("ClassCanBeRecord")
-@Getter @RequiredArgsConstructor
+@Getter
+@RequiredArgsConstructor
 public class Chunk {
     private final int chunkX;
     private final int chunkZ;
@@ -26,6 +27,7 @@ public class Chunk {
 
     /**
      * Gets a block at the given world coordinates
+     *
      * @param x World X Coord
      * @param y World Y Coord
      * @param z World Z Coord
@@ -51,8 +53,9 @@ public class Chunk {
 
     /**
      * Gets a block at the chunk-relative coordinates
+     *
      * @param localX Local X Coord
-     * @param y World Y Coord
+     * @param y      World Y Coord
      * @param localZ Local Z Coord
      * @return The block at the given coordinates
      */
@@ -140,33 +143,47 @@ public class Chunk {
     /**
      * Gets the world X coordinate of the first block in the chunk
      */
-    public int getWorldX() { return chunkX << 4; }
+    public int getWorldX() {
+        return chunkX << 4;
+    }
 
     /**
      * Gets the world Z coordinate of the first block in the chunk
      */
-    public int getWorldZ() { return chunkZ << 4; }
+    public int getWorldZ() {
+        return chunkZ << 4;
+    }
 
     /**
      * Gets the data version of the chunk (e.g. 4440 for 1.21.8)
      */
-    public int getDataVersion() { return nbt.getInt("DataVersion", 0); }
+    public int getDataVersion() {
+        return nbt.getInt("DataVersion", 0);
+    }
 
     /**
      * Gets the tick the chunk was last saved
      */
-    public long getLastUpdate() { return nbt.getLong("LastUpdate", 0L); }
+    public long getLastUpdate() {
+        return nbt.getLong("LastUpdate", 0L);
+    }
 
     /**
      * Gets the time in ticks players have been in the chunk. Increases faster when more players are in the chunk
      */
-    public long getInhabitedTime() { return nbt.getLong("InhabitedTime", 0L); }
+    public long getInhabitedTime() {
+        return nbt.getLong("InhabitedTime", 0L);
+    }
 
     /**
      * Checks if the chunk has been generated yet (or if the sections are empty)
      */
-    public boolean isGenerated() { return !sections.isEmpty(); }
+    public boolean isGenerated() {
+        return !sections.isEmpty();
+    }
 
     @Override
-    public String toString() { return String.format("Chunk(%d;%d)[Sections:%d]", chunkX, chunkZ, sections.size()); }
+    public String toString() {
+        return String.format("Chunk(%d;%d)[Sections:%d]", chunkX, chunkZ, sections.size());
+    }
 }

@@ -10,7 +10,9 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DecoratedPotBlockEntity extends BlockEntity {
-    public DecoratedPotBlockEntity(CompoundTag nbt) { super(nbt); }
+    public DecoratedPotBlockEntity(CompoundTag nbt) {
+        super(nbt);
+    }
 
     public List<String> getSherds() {
         return getList("sherds")
@@ -20,5 +22,7 @@ public class DecoratedPotBlockEntity extends BlockEntity {
             .orElse(List.of());
     }
 
-    public Optional<ItemStack> getItem() { return getCompound("item").map(ItemStack::new); }
+    public Optional<ItemStack> getItem() {
+        return getCompound("item").map(ItemStack::new);
+    }
 }

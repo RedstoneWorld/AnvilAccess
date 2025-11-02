@@ -14,11 +14,17 @@ public class FloatTag extends Tag {
     }
 
     @Override
-    public Float getValue() { return value; }
+    public Float getValue() {
+        return value;
+    }
 
     @Override
-    public FloatTag copy() { return new FloatTag(value); }
+    public FloatTag copy() {
+        return new FloatTag(value);
+    }
 
     @Override
-    public String toString() { return value + "f"; }
+    public String toString() {
+        return value + "f";
+    }
 }

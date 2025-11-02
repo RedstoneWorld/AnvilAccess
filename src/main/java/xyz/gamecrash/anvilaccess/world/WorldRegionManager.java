@@ -24,7 +24,8 @@ public class WorldRegionManager {
         this.worldFolder = worldFolder;
         regionFolder = worldFolder.resolve("region");
 
-        if (!Files.exists(regionFolder)) throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
+        if (!Files.exists(regionFolder))
+            throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
     }
 
     /**
@@ -68,7 +69,9 @@ public class WorldRegionManager {
     /**
      * Streams all chunks in the world
      */
-    public Stream<Chunk> getAllChunks() throws IOException { return getRegionFiles().stream().flatMap(RegionFile::streamChunks); }
+    public Stream<Chunk> getAllChunks() throws IOException {
+        return getRegionFiles().stream().flatMap(RegionFile::streamChunks);
+    }
 
     /**
      * Validates the world structure
@@ -103,7 +106,9 @@ public class WorldRegionManager {
     /**
      * Gets the total number of chunks across all regions
      */
-    public long getTotalChunkCount() throws IOException { return getRegionFiles().stream().mapToLong(RegionFile::getChunkCount).sum(); }
+    public long getTotalChunkCount() throws IOException {
+        return getRegionFiles().stream().mapToLong(RegionFile::getChunkCount).sum();
+    }
 
     /**
      * Safely loads a region file, returning an empty optional on error
