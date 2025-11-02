@@ -60,6 +60,10 @@ public class BlockEntity {
         return nbt.getInt(key, 0);
     }
 
+    public boolean keepPacked() {
+        return getByte("keepPacked") == 1;
+    }
+
     public CompoundTag getRawNBT() {
         return nbt;
     }

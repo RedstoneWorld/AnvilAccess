@@ -35,9 +35,9 @@ public class BlockEntityParser {
             case COMPARATOR -> new ComparatorBlockEntity(nbt);
             case COMMAND_BLOCK -> new CommandBlockEntity(nbt);
             case CONDUIT -> new ConduitBlockEntity(nbt);
-            case COPPER_GOLEM_STATUE -> new BlockEntity(nbt); // Not yet implemented
+            case COPPER_GOLEM_STATUE -> new BlockEntity(nbt);
             case CRAFTER -> new CrafterBlockEntity(nbt);
-            case CREAKING_HEART -> new BlockEntity(nbt); // Not yet implemented
+            case CREAKING_HEART -> new CreakingHeartBlockEntity(nbt);
             case DAYLIGHT_DETECTOR -> new BlockEntity(nbt);
             case DECORATED_POT -> new DecoratedPotBlockEntity(nbt);
             case DISPENSER, DROPPER -> new InventoryBlockEntity(nbt);
@@ -47,7 +47,7 @@ public class BlockEntityParser {
             case END_PORTAL -> new BlockEntity(nbt);
             case HANGING_SIGN, SIGN -> new SignBlockEntity(nbt);
             case HOPPER -> new HopperBlockEntity(nbt);
-            case JIGSAW -> new BlockEntity(nbt); // Not yet implemented
+            case JIGSAW -> new JigsawBlockEntity(nbt);
             case JUKEBOX -> new JukeboxBlockEntity(nbt);
             case LECTERN -> new LecternBlockEntity(nbt);
             case MOB_SPAWNER -> new SpawnerBlockEntity(nbt);
@@ -55,7 +55,7 @@ public class BlockEntityParser {
             case SKULL -> new SkullBlockEntity(nbt);
             case SCULK_CATALYST -> new SculkCatalystBlockEntity(nbt);
             case SCULK_SHRIEKER -> new SculkBlockEntity(nbt);
-            case STRUCTURE_BLOCK -> new BlockEntity(nbt); // Not yet implemented
+            case STRUCTURE_BLOCK -> new StructureBlockEntity(nbt);
             case TRIAL_SPAWNER -> new TrialSpawnerBlockEntity(nbt);
             case VAULT -> new VaultBlockEntity(nbt);
         };
