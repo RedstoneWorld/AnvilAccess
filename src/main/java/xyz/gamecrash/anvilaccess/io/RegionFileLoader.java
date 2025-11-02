@@ -117,24 +117,12 @@ public class RegionFileLoader {
      * Parse a single section from the given NBT data
      */
     private static Section parseSection(CompoundTag sectionTag) {
-        int yIndex = -999;
-
+        int yIndex = 0;
         Tag yTag = sectionTag.get("Y");
-        if (yTag != null) {
-            try {
-                switch (yTag.getType()) {
-                    case BYTE -> yIndex = sectionTag.getByte("Y", (byte) -999);
-                    case INT -> yIndex = sectionTag.getInt("Y", -999);
-                    case SHORT -> yIndex = sectionTag.getShort("Y", (short) -999);
-                }
-            } catch (Exception ignored) { }
-        }
 
-        if (yIndex == -999) {
-            System.out.println("Could not find Y index in section.");
-            if (yTag != null) System.out.println("Y tag type: " + yTag.getType() + ", value: " + yTag.getValue());
-            yIndex = 0;
-        }
+        if (yTag == null) System.out.println("Could not find Y index in section.");
+        else if (yTag.getValue() instanceof Number number) yIndex = number.intValue();
+        else System.out.println("Y index tag is not a number. Value:" + yTag.getValue());
 
         CompoundTag blockStatesTag = sectionTag.getCompound("block_states", null);
         if (blockStatesTag == null) blockStatesTag = sectionTag.getCompound("BlockStates", null);

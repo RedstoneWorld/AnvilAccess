@@ -137,28 +137,28 @@ public class RegionFile {
     }
 
     /**
-     * Gets the world chunk coordinates covered by this region
+     * Gets the minimum world chunk X coordinate covered by this region
      */
     public int getMinWorldChunkX() {
         return regionX * 32;
     }
 
     /**
-     * {@link #getMinWorldChunkX() comment of here}
+     * Gets the maximum world chunk X coordinate covered by this region
      */
     public int getMaxWorldChunkX() {
         return regionX * 32 + 31;
     }
 
     /**
-     * {@link #getMinWorldChunkX() comment of here}
+     * Gets the minimum world chunk Z coordinate covered by this region
      */
     public int getMinWorldChunkZ() {
         return regionZ * 32;
     }
 
     /**
-     * {@link #getMinWorldChunkX() comment of here}
+     * Gets the maximum world chunk Z coordinate covered by this region
      */
     public int getMaxWorldChunkZ() {
         return regionZ * 32 + 31;
