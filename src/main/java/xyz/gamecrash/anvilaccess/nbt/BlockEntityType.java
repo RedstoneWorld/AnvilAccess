@@ -8,7 +8,7 @@ import java.util.Set;
 /**
  * Enum containing all possible block entity types
  * <p>
- * Note: this should be on the version 1.21.9/10
+ * Note: this should be on the version 1.21.11
  * </p>
  */
 public enum BlockEntityType {
@@ -67,6 +67,8 @@ public enum BlockEntityType {
     SCULK_CATALYST("minecraft:sculk_catalyst"),
     SCULK_SENSOR("minecraft:sculk_sensor"),
     SCULK_SHRIEKER("minecraft:sculk_shrieker"),
+    SHELF("minecraft:oak_shelf", "minecraft:spruce_shelf", "minecraft:birch_shelf", "minecraft:jungle_shelf", "minecraft:acacia_shelf", "minecraft:dark_oak_shelf",
+        "minecraft:mangrove_shelf", "minecraft:cherry_shelf", "minecraft:pale_oak_shelf", "minecraft:bamboo_shelf", "minecraft:crimson_shelf", "minecraft:warped_shelf"),
     SMOKER("minecraft:smoker"),
     SOUL_CAMPFIRE("minecraft:soul_campfire"),
     STRUCTURE_BLOCK("minecraft:structure_block"),

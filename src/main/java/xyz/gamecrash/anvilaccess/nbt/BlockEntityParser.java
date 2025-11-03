@@ -55,6 +55,7 @@ public class BlockEntityParser {
             case SKULL -> new SkullBlockEntity(nbt);
             case SCULK_CATALYST -> new SculkCatalystBlockEntity(nbt);
             case SCULK_SHRIEKER -> new SculkBlockEntity(nbt);
+            case SHELF -> new ShelfBlockEntity(nbt);
             case STRUCTURE_BLOCK -> new StructureBlockEntity(nbt);
             case TRIAL_SPAWNER -> new TrialSpawnerBlockEntity(nbt);
             case VAULT -> new VaultBlockEntity(nbt);
