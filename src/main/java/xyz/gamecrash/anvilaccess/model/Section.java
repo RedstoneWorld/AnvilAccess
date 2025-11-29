@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Represents a 16x16x16 section of blocks within a chunk.
@@ -21,7 +23,7 @@ public class Section {
      * Gets the total number of blocks this section can contain
      */
     public static int getBlockCount() {
-        return 16 * 16 * 16;
+        return 16 * 16 * 16; // literally 4096
     }
 
     /**
@@ -77,5 +79,18 @@ public class Section {
 
         long mask = (1L << bitsPerBlock) - 1;
         return (int) ((blockStates[longIndex] >>> bitOffset) & mask);
+    }
+
+    /**
+     * Streams all blocks in this section as Block objects
+     */
+    public Stream<Block> streamBlocks() {
+        return IntStream.range(0, getBlockCount())
+            .mapToObj(i -> {
+                int x = i & 15;
+                int z = (i >> 4) & 15;
+                int y = (i >> 8) & 15;
+                return new Block(getBlockState(x, y, z), x, y, z);
+            });
     }
 }
