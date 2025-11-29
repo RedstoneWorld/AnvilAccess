@@ -19,6 +19,26 @@ public class Section {
     private final List<BlockState> palette;
     private final long[] blockStates;
 
+    private final int bitsPerBlock;
+    private final int blocksPerLong;
+    private final long mask;
+
+    public Section(int yIndex, List<BlockState> palette, long[] blockStates) {
+        this.yIndex = yIndex;
+        this.palette = palette;
+        this.blockStates = blockStates;
+
+        if (palette.size() <= 1) {
+            this.bitsPerBlock = 0;
+            this.blocksPerLong = 0;
+            this.mask = 0;
+        } else {
+            this.bitsPerBlock = Math.max(4, Integer.SIZE - Integer.numberOfLeadingZeros(palette.size() - 1));
+            this.blocksPerLong = 64 / bitsPerBlock;
+            this.mask = (1L << bitsPerBlock) - 1;
+        }
+    }
+
     /**
      * Gets the total number of blocks this section can contain
      */
@@ -68,16 +88,12 @@ public class Section {
     private int getPaletteIndex(int x, int y, int z) {
         if (palette.size() <= 1) return 0;
 
-        int bitsPerBlock = Math.max(4, Integer.SIZE - Integer.numberOfLeadingZeros(palette.size() - 1));
-        int blocksPerLong = 64 / bitsPerBlock;
         int blockIndex = y * 256 + z * 16 + x;
-
         int longIndex = blockIndex / blocksPerLong;
         int bitOffset = (blockIndex % blocksPerLong) * bitsPerBlock;
 
         if (longIndex >= blockStates.length) return 0;
 
-        long mask = (1L << bitsPerBlock) - 1;
         return (int) ((blockStates[longIndex] >>> bitOffset) & mask);
     }
 
