@@ -45,7 +45,7 @@ public class RegionFile {
     public Optional<Chunk> getChunk(int localX, int localZ) {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) return Optional.empty();
 
-        int index = localZ * 32 * localX;
+        int index = localZ * 32 + localX;
         RegionChunkEntry entry = entries[index];
 
         if (entry.isEmpty()) return Optional.empty();
@@ -101,7 +101,7 @@ public class RegionFile {
 
         for (int z = 0; z < 32; z++) {
             for (int x = 0; x < 32; x++) {
-                int index = x * 32 + z;
+                int index = z * 32 + x;
                 RegionChunkEntry entry = entries[index];
 
                 if (entry.isEmpty()) continue;
