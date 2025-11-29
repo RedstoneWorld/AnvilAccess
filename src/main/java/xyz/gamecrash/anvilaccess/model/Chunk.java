@@ -60,8 +60,8 @@ public class Chunk {
      * @return The block at the given coordinates
      */
     public Block getLocalBlock(int localX, int y, int localZ) {
-        int wX = chunkX << 4 + localX;
-        int wZ = chunkZ << 4 + localZ;
+        int wX = (chunkX << 4) + localX;
+        int wZ = (chunkZ << 4) + localZ;
 
         return getBlock(wX, y, wZ);
     }
