@@ -25,14 +25,14 @@ public class BlockStateInterningUtil {
     }
 
     /**
-     * Create & intern a BlockState
+     * Create and intern a BlockState
      */
     public static BlockState create(String id, Map<String, String> properties) {
         return intern(new BlockState(id, properties));
     }
 
     /**
-     * Create & intern a BlockState (with no properties)
+     * Create and intern a BlockState (with no properties)
      */
     public static BlockState create(String id) {
         return intern(new BlockState(id));
