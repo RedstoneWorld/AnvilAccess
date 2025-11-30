@@ -3,6 +3,7 @@ package xyz.gamecrash.anvilaccess.io;
 import xyz.gamecrash.anvilaccess.model.*;
 import xyz.gamecrash.anvilaccess.nbt.*;
 import xyz.gamecrash.anvilaccess.nbt.tags.*;
+import xyz.gamecrash.anvilaccess.util.MCAReaderCache;
 import xyz.gamecrash.anvilaccess.util.block.BlockStateDecoder;
 
 import java.io.ByteArrayInputStream;
@@ -86,11 +87,14 @@ public class RegionFileLoader {
      */
     private static void setupLazyLoading(RegionFile regionFile, Path file) {
         regionFile.setChunkLoader((lX, lZ) -> {
-            try (MCAReader reader = new MCAReader(file)) {
+            try {
+                MCAReader reader = MCAReaderCache.get(file);
                 RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
                 if (!entry.isEmpty())
                     return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(), lX, lZ);
                 return null;
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to load chunk", e);
             }
         });
     }
