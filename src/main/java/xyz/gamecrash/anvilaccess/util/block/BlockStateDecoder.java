@@ -27,6 +27,6 @@ public class BlockStateDecoder {
             }
         }
 
-        return new BlockState(name, properties);
+        return BlockStateInterningUtil.create(name, properties);
     }
 }
