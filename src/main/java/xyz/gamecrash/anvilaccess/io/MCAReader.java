@@ -24,8 +24,10 @@ public class MCAReader implements AutoCloseable {
 
     public MCAReader(Path file) throws IOException {
         this.file = file;
+        // read MCA file (maybe not the best approach, but yeah)
         this.fileData = Files.readAllBytes(file);
 
+        // check if file is as lareg as header (or more)
         if (fileData.length < HEADER_SIZE)
             throw new IOException("MCA file too small: " + fileData.length + " bytes, smaller than normal header size");
     }
@@ -36,6 +38,7 @@ public class MCAReader implements AutoCloseable {
      * Reads chunk entries from the MCA file header
      */
     public RegionChunkEntry[] readChunkEntries() throws IOException {
+        // create array for max. 32*32 chunk entries
         RegionChunkEntry[] entries = new RegionChunkEntry[1024];
 
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(fileData))) {
@@ -45,6 +48,7 @@ public class MCAReader implements AutoCloseable {
 
             for (int i = 0; i < 1024; i++) {
                 int locationData = input.readInt();
+                // get offset (first 3 bytes) and sector count (last byte)
                 offsets[i] = (locationData >>> 8) & 0xFFFFFF; // first 3B
                 sectorCounts[i] = locationData & 0xFF; // last B
             }
@@ -53,7 +57,7 @@ public class MCAReader implements AutoCloseable {
             int[] timestamps = new int[1024];
             for (int i = 0; i < 1024; i++) timestamps[i] = input.readInt();
 
-            // create entries
+            // create entries from data
             for (int i = 0; i < 1024; i++)
                 entries[i] = new RegionChunkEntry(offsets[i], sectorCounts[i], timestamps[i]);
         }
@@ -67,6 +71,7 @@ public class MCAReader implements AutoCloseable {
     public ChunkData readChunkData(RegionChunkEntry entry) throws IOException {
         if (entry.isEmpty()) throw new IllegalArgumentException("Can't read data for empty chunk entry");
 
+        // calculate position of chunk data in file and validate bounds
         long absoluteOffset = entry.getAbsoluteOffset();
         if (absoluteOffset + 5 > fileData.length) throw new IOException("Chunk data extends beyond file bounds");
 
@@ -78,11 +83,13 @@ public class MCAReader implements AutoCloseable {
             ((fileData[dataOffset + 3] & 0xFF)
             );
 
+        // validate chunk data length
         if (length < 1 || length > entry.getSizeInByte()) throw new IOException("Chunk data length out of range");
 
+        // get compression type from header
         byte compressionType = fileData[dataOffset + 4];
 
-        // read compressed data
+        // read compressed chunk data (without byte for compression type)
         byte[] compressedData = new byte[length - 1]; // for compression type byte
         System.arraycopy(fileData, dataOffset + 5, compressedData, 0, compressedData.length);
 
@@ -93,9 +100,13 @@ public class MCAReader implements AutoCloseable {
      * Decompresses and reads chunk data
      */
     public byte[] decompressAndReadChunkData(RegionChunkEntry entry) throws IOException {
+        // read compressed chunk data
         ChunkData chunkData = readChunkData(entry);
+
+        // get compression type
         CompressionType type = CompressionType.fromId(chunkData.compressionType());
 
+        // decompress chunk data
         return CompressionUtils.decompress(chunkData.data(), type);
     }
 

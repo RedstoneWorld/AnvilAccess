@@ -22,10 +22,12 @@ public class RegionFileLoader {
      * Loads a region file at the given path
      */
     public static RegionFile loadRegion(Path file) throws IOException {
+        // Extract filename and validate format (r.x.z.mca)
         String fileName = file.getFileName().toString();
         if (!fileName.startsWith("r.") || !fileName.endsWith(".mca"))
             throw new IllegalArgumentException("Invalid region file name: " + fileName);
 
+        // Parse region coordinates from filename (e.g., r.0.0.mca -> x=0, z=0)
         String[] parts = fileName.substring(2, fileName.length() - 4).split("\\.");
         if (parts.length != 2) throw new IllegalArgumentException("Invalid region file name format: " + fileName);
 
@@ -37,6 +39,7 @@ public class RegionFileLoader {
             RegionChunkEntry[] entries = reader.readChunkEntries();
             RegionFile regionFile = new RegionFile(file, rX, rZ, entries);
 
+            // set up lazy loading for the actual chunk data
             setupLazyLoading(regionFile, file);
 
             return regionFile;
@@ -47,15 +50,19 @@ public class RegionFileLoader {
      * Loads a single chunk through the MCA reader
      */
     public static Chunk loadChunk(MCAReader reader, RegionChunkEntry entry, int regionX, int regionZ, int localX, int localZ) throws IOException {
+        // Decompress chunk data from the MCA file
         byte[] decompressed = reader.decompressAndReadChunkData(entry);
 
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(decompressed))) {
+            // Parse NBT data from the decompressed chunk bytes (this contains the actual chunk data)
             NamedTag namedTag = TagParser.readNamed(input);
             if (!(namedTag.tag() instanceof CompoundTag rootTag))
                 throw new IOException("Root tag is not a compound tag");
 
+            // Calculate world chunk coordinates from region and local coordinates
             int cX = regionX * 32 + localX;
             int cZ = regionZ * 32 + localZ;
+
             List<Section> sections = parseSections(rootTag);
 
             return new Chunk(cX, cZ, rootTag, sections);
@@ -88,8 +95,11 @@ public class RegionFileLoader {
     private static void setupLazyLoading(RegionFile regionFile, Path file) {
         regionFile.setChunkLoader((lX, lZ) -> {
             try {
+                // Get (cached) reader for the region file
                 MCAReader reader = MCAReaderCache.get(file);
                 RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
+
+                // Only load if chunk exists in the region
                 if (!entry.isEmpty())
                     return loadChunk(reader, entry, regionFile.getRegionX(), regionFile.getRegionZ(), lX, lZ);
                 return null;
@@ -100,14 +110,16 @@ public class RegionFileLoader {
     }
 
     /**
-     * Parse sections from the given chunk NBT data
+     * Parse chunk sections from the given chunk NBT data
      */
     private static List<Section> parseSections(CompoundTag chunkTag) {
         List<Section> sections = new ArrayList<>();
 
+        // Look for sections in the chunk NBT
         ListTag sectionsTag = chunkTag.getList("sections", new ListTag(TagType.COMPOUND));
         if (sectionsTag == null || sectionsTag.isEmpty()) return sections;
 
+        // Parse sections in the list
         for (int i = 0; i < sectionsTag.size(); i++) {
             CompoundTag sectionTag = sectionsTag.getCompound(i);
             Section section = parseSection(sectionTag);
@@ -118,9 +130,10 @@ public class RegionFileLoader {
     }
 
     /**
-     * Parse a single section from the given NBT data
+     * Parse a single chunk section from the given NBT data
      */
     private static Section parseSection(CompoundTag sectionTag) {
+        // Get Y index / pos of the section
         int yIndex = 0;
         Tag yTag = sectionTag.get("Y");
 
@@ -128,16 +141,19 @@ public class RegionFileLoader {
         else if (yTag.getValue() instanceof Number number) yIndex = number.intValue();
         else System.out.println("Y index tag is not a number. Value:" + yTag.getValue());
 
+        // Get palette and block states (handling both new and old NBT formats, thus the duplicate checks)
         CompoundTag blockStatesTag = sectionTag.getCompound("block_states", null);
         if (blockStatesTag == null) blockStatesTag = sectionTag.getCompound("BlockStates", null);
         if (blockStatesTag == null) return new Section(yIndex, List.of(new BlockState("minecraft:air")), null);
 
+        // Get block palette from the NBT data
         ListTag paletteTag = blockStatesTag.getList("palette", new ListTag(TagType.COMPOUND));
         if (paletteTag == null || paletteTag.isEmpty())
             paletteTag = blockStatesTag.getList("Palette", new ListTag(TagType.COMPOUND));
 
         List<BlockState> palette = new ArrayList<>();
 
+        // Parse block states in the palette
         for (int i = 0; i < paletteTag.size(); i++) {
             CompoundTag blockStateTag = paletteTag.getCompound(i);
             BlockState blockState = BlockStateDecoder.decodeBlockState(blockStateTag);
@@ -146,6 +162,7 @@ public class RegionFileLoader {
 
         if (palette.isEmpty()) palette.add(new BlockState("minecraft:air"));
 
+        // Get block state indices array
         long[] blockStates = blockStatesTag.getLongArray("data", null);
         if (blockStates == null) blockStates = blockStatesTag.getLongArray("Data", null);
 
