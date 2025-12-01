@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
- * Represents an MCA region file containing a 32x32 grid of chunks.
+ * Represents an MCA region file containing a 32x32 grid of chunks, and their entries in the region header.
  */
 @Getter
 @RequiredArgsConstructor
@@ -45,12 +45,13 @@ public class RegionFile {
     public Optional<Chunk> getChunk(int localX, int localZ) {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) return Optional.empty();
 
+        // convert 2D coordinates to flat array index (row-major order thingy)
         int index = localZ * 32 + localX;
         RegionChunkEntry entry = entries[index];
 
         if (entry.isEmpty()) return Optional.empty();
+        // return cached chunk if already loaded, else load (if lazy loader is available)
         if (chunks[index] != null) return Optional.of(chunks[index]);
-
         if (chunkLoader != null) {
             try {
                 Chunk chunk = chunkLoader.load(localX, localZ);
@@ -74,9 +75,11 @@ public class RegionFile {
      * @return Optional containing the chunk, if it exists in this region
      */
     public Optional<Chunk> getWorldChunk(int worldX, int worldZ) {
+        // convert world chunk coordinates to local region coordinates
         int localX = worldX - (regionX * 32);
         int localZ = worldZ - (regionZ * 32);
 
+        // check if the world chunk is within the region bounds
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31) return Optional.empty();
 
         return getChunk(localX, localZ);
@@ -89,6 +92,7 @@ public class RegionFile {
         if (localX < 0 || localX > 31 || localZ < 0 || localZ > 31)
             throw new IllegalArgumentException("Chunk coordinates out of bounds");
 
+        // get flat array index from 2D coordinates
         return entries[localZ * 32 + localX];
     }
 
@@ -99,17 +103,21 @@ public class RegionFile {
     public Stream<Chunk> streamChunks() {
         List<Chunk> available = new ArrayList<>();
 
+        // go through all 32x32 chunk coords in the region
         for (int z = 0; z < 32; z++) {
             for (int x = 0; x < 32; x++) {
+                // get flat array index for given position
                 int index = z * 32 + x;
                 RegionChunkEntry entry = entries[index];
-
                 if (entry.isEmpty()) continue;
+
+                // use cached chunk if already loaded
                 if (chunks[index] != null) {
                     available.add(chunks[index]);
                     continue;
                 }
 
+                // attempt lazy loading if chunk loader is available
                 if (chunkLoader != null) {
                     try {
                         Chunk chunk = chunkLoader.load(x, z);

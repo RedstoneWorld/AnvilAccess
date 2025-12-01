@@ -34,20 +34,26 @@ public class Chunk {
      * @return The block at the given coordinates
      */
     public Block getBlock(int x, int y, int z) {
+        // convert world coordinates to local chunk coordinates
         int lX = x & 15;
         int lZ = z & 15;
 
+        // get which section contains this Y coordinate
         int sectionY = y >> 4;
 
+        // find the section that matches Y index
         Optional<Section> section = sections.stream()
             .filter(s -> s.getYIndex() == sectionY)
             .findFirst();
 
+        // return air if section not found
         if (section.isEmpty()) return new Block(new BlockState("minecraft:air"), x, y, z);
 
+        // get local Y coordinate in the section
         int lY = y & 15;
         BlockState state = section.get().getBlockState(lX, lY, lZ);
 
+        // create/return the block with state and coordinates
         return new Block(state, x, y, z);
     }
 
@@ -101,11 +107,15 @@ public class Chunk {
      * Gets a list of compounds containing all block entities within the chunk
      */
     public List<CompoundTag> getBlockEntityCompounds() {
+        // try to get block entities using modern format or fallback to legacy if it is null
         ListTag blockEntityTag = nbt.getList("block_entities", new ListTag(TagType.COMPOUND));
-        if (blockEntityTag == null || blockEntityTag.isEmpty())
+        if (blockEntityTag.isEmpty())
             blockEntityTag = nbt.getList("TileEntities", new ListTag(TagType.COMPOUND)); // legacy format
+
+        // oh noes, there are no block entities (or it is something completely different)
         if (blockEntityTag == null) return List.of();
 
+        // get block entity compounds from the list
         List<CompoundTag> blockEntities = new ArrayList<>();
         for (int i = 0; i < blockEntityTag.size(); i++) {
             CompoundTag blockEntity = blockEntityTag.getCompound(i);

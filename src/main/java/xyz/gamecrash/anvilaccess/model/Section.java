@@ -58,9 +58,8 @@ public class Section {
         if (x < 0 || x > 15 || y < 0 || y > 15 || z < 0 || z > 15)
             throw new IllegalArgumentException("Coordinates must be within 0-15 range");
 
-        if (blockStates == null || blockStates.length == 0) {
+        if (blockStates == null || blockStates.length == 0)
             return palette.isEmpty() ? new BlockState("minecraft:air") : palette.getFirst();
-        }
 
         int paletteIndex = getPaletteIndex(x, y, z);
         if (paletteIndex >= palette.size()) return new BlockState("minecraft:air");
