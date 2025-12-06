@@ -8,6 +8,7 @@ import java.util.zip.CRC32;
 /**
  * Util class for hashing operations
  */
+// NOTE: this was originally meant for "faster" comparison of two chunks, if their contents are equal. But there are better ways to do this
 public class HashUtils {
 
     /**

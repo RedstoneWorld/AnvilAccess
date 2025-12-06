@@ -20,16 +20,13 @@ public class MCAReader implements AutoCloseable {
 
     @Getter
     private final Path file;
-    private final byte[] fileData;
+    private byte[] fileData;
+    private volatile long lastModified;
 
     public MCAReader(Path file) throws IOException {
         this.file = file;
         // read MCA file (maybe not the best approach, but yeah)
-        this.fileData = Files.readAllBytes(file);
-
-        // check if file is as lareg as header (or more)
-        if (fileData.length < HEADER_SIZE)
-            throw new IOException("MCA file too small: " + fileData.length + " bytes, smaller than normal header size");
+        reloadFileData();
     }
 
     // https://minecraft.wiki/w/Region_file_format#Structure
@@ -38,6 +35,7 @@ public class MCAReader implements AutoCloseable {
      * Reads chunk entries from the MCA file header
      */
     public RegionChunkEntry[] readChunkEntries() throws IOException {
+        refreshFileDataIfModified();
         // create array for max. 32*32 chunk entries
         RegionChunkEntry[] entries = new RegionChunkEntry[1024];
 
@@ -70,10 +68,11 @@ public class MCAReader implements AutoCloseable {
      */
     public ChunkData readChunkData(RegionChunkEntry entry) throws IOException {
         if (entry.isEmpty()) throw new IllegalArgumentException("Can't read data for empty chunk entry");
+        refreshFileDataIfModified();
 
-        // calculate position of chunk data in file and validate bounds
+        // calculate position of chunk data in file and validate bounds (we'll validate fully after reading length)
         long absoluteOffset = entry.getAbsoluteOffset();
-        if (absoluteOffset + 5 > fileData.length) throw new IOException("Chunk data extends beyond file bounds");
+        if (absoluteOffset + 4 > fileData.length) throw new IOException("Chunk data extends beyond file bounds");
 
         // read chunk header (4b length + 1b compression type)
         int dataOffset = (int) absoluteOffset;
@@ -122,5 +121,23 @@ public class MCAReader implements AutoCloseable {
      * <p>This only exists to allow MCAReader to be used in a try-with-resources-statement</p>
      */
     public void close() {
+    }
+
+    /**
+     * Re-read the MCA file
+     */
+    public synchronized void reloadFileData() throws IOException {
+        long m = Files.getLastModifiedTime(file).toMillis();
+        byte[] newData = Files.readAllBytes(file);
+        if (newData.length < HEADER_SIZE)
+            throw new IOException("MCA file too small: " + newData.length + " bytes, smaller than normal header size");
+
+        this.fileData = newData;
+        this.lastModified = m;
+    }
+
+    private void refreshFileDataIfModified() throws IOException {
+        long current = Files.getLastModifiedTime(file).toMillis();
+        if (current != lastModified) reloadFileData();
     }
 }

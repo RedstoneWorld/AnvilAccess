@@ -20,8 +20,8 @@ public enum CompressionType {
     }
 
     public static CompressionType fromId(int id) {
+        if (id == 127) throw new UnsupportedOperationException("Compression type " + id + " is not supported or implemented");
         for (CompressionType type : values()) {
-            if (id == 127) throw new UnsupportedOperationException("Compression type " + id + " is not supported");
             if (type.id == id) return type;
         }
         throw new IllegalArgumentException("Unknown compression type: " + id);

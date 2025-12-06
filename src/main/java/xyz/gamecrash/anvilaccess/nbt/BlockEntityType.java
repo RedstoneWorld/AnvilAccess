@@ -2,13 +2,14 @@ package xyz.gamecrash.anvilaccess.nbt;
 
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.Set;
 
 /**
  * Enum containing all possible block entity types
  * <p>
- * Note: this should be on the version 1.21.11
+ * Note: this is on the version of 1.21.11
  * </p>
  */
 public enum BlockEntityType {
@@ -80,11 +81,11 @@ public enum BlockEntityType {
     private final Set<String> id;
 
     BlockEntityType(String... id) {
-        this.id = java.util.Set.of(id);
+        this.id = Set.of(id);
     }
 
     public static Optional<BlockEntityType> fromId(String id) {
-        return java.util.Arrays.stream(values())
+        return Arrays.stream(values())
             .filter(type -> type.getId().contains(id))
             .findFirst();
     }
