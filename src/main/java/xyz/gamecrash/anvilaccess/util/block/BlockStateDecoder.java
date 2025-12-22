@@ -16,8 +16,10 @@ public class BlockStateDecoder {
      * Decodes a BlockState from a given NBT compound tag
      */
     public static BlockState decodeBlockState(CompoundTag blockStateTag) {
+        // try to get the name of the block
         String name = blockStateTag.getString("Name", "minecraft:air");
 
+        // try to get the block state
         Map<String, String> properties = new HashMap<>();
         CompoundTag propertiesTag = blockStateTag.getCompound("Properties", null);
 
