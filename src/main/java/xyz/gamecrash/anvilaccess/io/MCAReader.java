@@ -84,7 +84,7 @@ public class MCAReader implements AutoCloseable {
         long absoluteOffset = entry.getAbsoluteOffset();
         if (absoluteOffset + 4 > fileData.length) throw new IOException("Chunk data extends beyond file bounds");
 
-        // TODO: maybe using ByteBuffer here is safer? Also, using a re-usable one might be faster
+        // NOTE: A ByteBuffer is (very) slightly slower here
 
         // read chunk header (4b length + 1b compression type) -> https://minecraft.wiki/w/Region_file_format#Payload
         int dataOffset = (int) absoluteOffset;
