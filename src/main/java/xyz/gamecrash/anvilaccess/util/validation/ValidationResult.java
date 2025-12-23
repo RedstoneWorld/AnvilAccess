@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Class holding validation results
+ * <p>
+ * See {@link ValidationUtils} for a class through which you can generate these results
  */
 public class ValidationResult {
     @Getter

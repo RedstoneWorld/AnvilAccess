@@ -9,6 +9,8 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Cache for MCAReader instances to reduce file opening overhead
+ * <p>
+ * Another advantage this class adds is a pretty well reduced RAM and CPU time usage
  */
 public class MCAReaderCache {
     private static final int MAX_CACHE_SIZE = 10; // Limit to avoid memory issues

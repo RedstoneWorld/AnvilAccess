@@ -14,6 +14,12 @@ import java.nio.file.Path;
 
 /**
  * MCA-File reader for parsing headers and chunk data
+ * <p>
+ * See anvil / region file format specs under the <a href="https://minecraft.wiki/w/Anvil_file_format">Anvil File Format</a>
+ * and <a href="https://minecraft.wiki/w/Region_file_format">Region File Format</a> Minecraft Wiki pages for more information on how and why
+ * things are parsed here.
+ * @see RegionFileLoader
+ * @see xyz.gamecrash.anvilaccess.model.RegionFile
  */
 public class MCAReader implements AutoCloseable {
     private static final int HEADER_SIZE = 8192;

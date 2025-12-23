@@ -8,6 +8,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * A class for representing block entities that can store items.
+ * <p>
+ * See {@link InventoryBlockEntity}
+ */
 public abstract class ContainerBlockEntity extends BlockEntity {
     public ContainerBlockEntity(CompoundTag nbt) {
         super(nbt);

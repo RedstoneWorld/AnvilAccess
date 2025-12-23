@@ -12,6 +12,7 @@ import java.util.Set;
  * Note: this is on the version of 1.21.11
  * </p>
  */
+// TODO: get rid of the minecraft: (namespace key) at the beginning - maybe add when required?
 public enum BlockEntityType {
     BANNER("minecraft:banner"),
     BARREL("minecraft:barrel"),

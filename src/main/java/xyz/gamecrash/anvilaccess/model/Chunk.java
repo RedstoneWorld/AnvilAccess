@@ -15,6 +15,10 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a chunk with its sections and NBT data.
+ * <p>
+ * @see Section
+ * @see RegionFile
+ * @see RegionChunkEntry
  */
 @SuppressWarnings("ClassCanBeRecord")
 @Getter

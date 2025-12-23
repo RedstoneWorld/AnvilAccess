@@ -11,6 +11,9 @@ import java.util.zip.InflaterInputStream;
 
 /**
  * Util class for handling different compression formats used in MCA files
+ *
+ * <p>
+ * All of them are handled except for type 127 (see {@link CompressionType}), as this library cannot really know which one that is.
  */
 public class CompressionUtils {
     private static final LZ4Factory lz4Factory = LZ4Factory.fastestInstance();

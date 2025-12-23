@@ -4,6 +4,9 @@ import lombok.Getter;
 
 /**
  * Enum representing all existing NBT tag types
+ * <p>
+ * A complete table with descriptions of these tags can be found <a href="https://minecraft.wiki/w/NBT_format#TAG_definition">here</a>,
+ * a table with the data types <a href="https://minecraft.wiki/w/NBT_format#Data_types">here</a>.
  */
 public enum TagType {
 

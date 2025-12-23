@@ -13,6 +13,11 @@ import java.nio.file.Files;
 
 /**
  * Utility class for validating MCA files, chunks and world structures
+ *
+ * <p>
+ * Useful when you want to get an overview of a world's integrity, etc.
+ * <p>
+ * See {@link ValidationResult} for the result being returned
  */
 public class ValidationUtils {
 

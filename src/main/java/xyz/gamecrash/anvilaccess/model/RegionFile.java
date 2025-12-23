@@ -14,6 +14,13 @@ import java.util.stream.Stream;
 
 /**
  * Represents an MCA region file containing a 32x32 grid of chunks, and their entries in the region header.
+ * <p>
+ * See anvil / region file format specs under the <a href="https://minecraft.wiki/w/Anvil_file_format">Anvil File Format</a>
+ * and <a href="https://minecraft.wiki/w/Region_file_format">Region File Format</a> Minecraft Wiki pages
+ * <p>
+ * @see xyz.gamecrash.anvilaccess.io.MCAReader
+ * @see RegionChunkEntry
+ * @see Chunk
  */
 @Getter
 @RequiredArgsConstructor

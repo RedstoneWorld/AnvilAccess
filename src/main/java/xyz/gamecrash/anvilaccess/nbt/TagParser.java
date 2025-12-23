@@ -47,6 +47,7 @@ public class TagParser {
     }
 
     private static String readString(DataInputStream input) throws IOException {
+        // read length of string first, then that many bytes of data
         short length = input.readShort();
         if (length < 0) throw new IOException("Negative length: " + length);
         if (length == 0) return "";
@@ -58,6 +59,7 @@ public class TagParser {
     }
 
     private static ByteArrayTag readByteArray(DataInputStream input) throws IOException {
+        // read byte array, 4-byte length followed by the raw bytes
         int length = input.readInt();
         if (length < 0) throw new IOException("Negative length: " + length);
 
@@ -68,12 +70,14 @@ public class TagParser {
     }
 
     private static ListTag readList(DataInputStream input) throws IOException {
+        // read list tag: first the element type id, then 4-bytes of length, then that many elements
         byte typeId = input.readByte();
         int length = input.readInt();
         if (length < 0) throw new IOException("Negative length: " + length);
 
         TagType type = TagType.fromId(typeId);
         ListTag list = new ListTag(type);
+        // read "length" elements of given tag type
         for (int i = 0; i < length; i++) {
             Tag tag = readTag(input, type);
             if (tag != null) list.add(tag);
@@ -83,11 +87,12 @@ public class TagParser {
     }
 
     private static CompoundTag readCompound(DataInputStream input) throws IOException {
+        // reads a compound tag, sequence of named tags ending with an END tag
         CompoundTag compound = new CompoundTag();
 
         while (true) {
             byte typeId = input.readByte();
-            if (typeId == 0) break;
+            if (typeId == TagType.END.getId()) break;
 
             TagType type = TagType.fromId(typeId);
             String name = readString(input);
@@ -100,6 +105,7 @@ public class TagParser {
     }
 
     private static IntArrayTag readIntArray(DataInputStream input) throws IOException {
+        // reads an int array, 4-byte length followed by "length" ints
         int length = input.readInt();
         if (length < 0) throw new IOException("Negative length: " + length);
 
@@ -110,6 +116,7 @@ public class TagParser {
     }
 
     private static LongArrayTag readLongArray(DataInputStream input) throws IOException {
+        // reads a long array, 4-byte length followed by "length" longs
         int length = input.readInt();
         if (length < 0) throw new IOException("Negative length: " + length);
 

@@ -9,7 +9,14 @@ import java.util.stream.Stream;
 
 /**
  * Represents a 16x16x16 section of blocks within a chunk.
- * Handles palette-based block storage and bit-packed block states
+ * Handles palette-based block storage and bit-packed block states.
+ * <p>
+ * Take a look at the <a href="https://minecraft.wiki/w/Chunk_format#NBT_structure">Chunk Format</a> Wiki entry under the {@code sections}
+ * tag to see how things are stored.
+ * @see Chunk
+ * @see RegionFile
+ * @see Block
+ * @see BlockState
  */
 @SuppressWarnings("ClassCanBeRecord")
 @Getter

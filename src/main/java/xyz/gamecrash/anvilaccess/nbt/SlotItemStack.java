@@ -3,7 +3,7 @@ package xyz.gamecrash.anvilaccess.nbt;
 import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 
 /**
- * Class representing an ItemStack with a given slot its in
+ * Class representing an ItemStack with a given slot it is currently in
  */
 public class SlotItemStack extends ItemStack {
     public SlotItemStack(CompoundTag nbt) {

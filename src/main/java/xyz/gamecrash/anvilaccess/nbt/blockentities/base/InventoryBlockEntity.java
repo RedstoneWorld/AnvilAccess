@@ -4,6 +4,11 @@ import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 
 import java.util.Optional;
 
+/**
+ * A class representing block entities that act as inventories.
+ * <p>
+ * See {@link ContainerBlockEntity}
+ */
 public class InventoryBlockEntity extends ContainerBlockEntity {
     public InventoryBlockEntity(CompoundTag nbt) {
         super(nbt);

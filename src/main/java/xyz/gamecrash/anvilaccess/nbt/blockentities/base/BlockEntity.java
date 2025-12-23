@@ -7,6 +7,11 @@ import xyz.gamecrash.anvilaccess.nbt.tags.ListTag;
 
 import java.util.Optional;
 
+/**
+ * Class representing a basic Block Entity.
+ * <p>
+ * It has methods to get data every block entity has in common. It also has some other useful utility methods.
+ */
 @Getter
 @RequiredArgsConstructor
 public class BlockEntity {

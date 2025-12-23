@@ -14,7 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Loader for region (MCA) files bridging IO with the model classes
+ * Loader for region (MCA) files bridging IO with the model classes.
+ * <p>
+ * See anvil / region file format specs under the <a href="https://minecraft.wiki/w/Anvil_file_format">Anvil File Format</a>
+ * and <a href="https://minecraft.wiki/w/Region_file_format">Region File Format</a> Minecraft Wiki pages
+ * <p>
  */
 public class RegionFileLoader {
 
