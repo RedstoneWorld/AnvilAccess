@@ -2,6 +2,12 @@ package xyz.gamecrash.anvilaccess.model;
 
 /**
  * Represents a single chunk entry in an MCA region file header.
+ * <p>
+ * As seen under the <a href="https://minecraft.wiki/w/Region_file_format#Chunk_location">Wiki Entry</a>, a chunk entry in a header consists out of location
+ * information (where to find the chunk in the file) - represented by {@code offset} and {@code sectorCount}, and a {@code timestamp} stating when the chunk has
+ * last been modified.
+ * @see RegionFile
+ * @see xyz.gamecrash.anvilaccess.io.MCAReader#readChunkData(RegionChunkEntry)
  */
 public record RegionChunkEntry(int offset, int sectorCount, int timestamp) {
 

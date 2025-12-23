@@ -1,7 +1,7 @@
 package xyz.gamecrash.anvilaccess.model;
 
 /**
- * Representation of minecraft a block with a blockState and its coordinates. (Immutable)
+ * Immutable representation of a Minecraft block with a {@link BlockState} and its coordinates
  */
 public record Block(BlockState state, int x, int y, int z) {
 

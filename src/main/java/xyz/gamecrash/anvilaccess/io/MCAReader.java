@@ -70,7 +70,11 @@ public class MCAReader implements AutoCloseable {
     }
 
     /**
-     * Reads raw (uncompressed) chunk data for the given entry
+     * Reads raw chunk data for the given entry
+     * <p>
+     * This does not take compression into account. For the actual chunk contents,
+     * see {@link #decompressAndReadChunkData(RegionChunkEntry)} (returns data as a byte array)
+     * and {@link RegionFileLoader#loadChunk(MCAReader, RegionChunkEntry, int, int, int, int)} (returns data as an actual chunk)
      */
     public ChunkData readChunkData(RegionChunkEntry entry) throws IOException {
         if (entry.isEmpty()) throw new IllegalArgumentException("Can't read data for empty chunk entry");
@@ -80,8 +84,11 @@ public class MCAReader implements AutoCloseable {
         long absoluteOffset = entry.getAbsoluteOffset();
         if (absoluteOffset + 4 > fileData.length) throw new IOException("Chunk data extends beyond file bounds");
 
-        // read chunk header (4b length + 1b compression type)
+        // TODO: maybe using ByteBuffer here is safer? Also, using a re-usable one might be faster
+
+        // read chunk header (4b length + 1b compression type) -> https://minecraft.wiki/w/Region_file_format#Payload
         int dataOffset = (int) absoluteOffset;
+        // "build" the length out of the four bytes (the mask of 0xFF is required to "convert" the byte into a positive value)
         int length = ((fileData[dataOffset] & 0xFF) << 24) |
             ((fileData[dataOffset + 1] & 0xFF) << 16) |
             ((fileData[dataOffset + 2] & 0xFF) << 8) |

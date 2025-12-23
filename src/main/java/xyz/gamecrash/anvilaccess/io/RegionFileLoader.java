@@ -23,7 +23,7 @@ import java.util.List;
 public class RegionFileLoader {
 
     /**
-     * Loads a region file at the given path
+     * Validates a region file name at the given path, then loads its contents and sets up lazy loading for that file
      */
     public static RegionFile loadRegion(Path file) throws IOException {
         // Extract filename and validate format (r.x.z.mca)
@@ -51,7 +51,7 @@ public class RegionFileLoader {
     }
 
     /**
-     * Loads a single chunk through the MCA reader
+     * Loads a single chunk through the given MCA reader - which "targets" a specific MCA file.
      */
     public static Chunk loadChunk(MCAReader reader, RegionChunkEntry entry, int regionX, int regionZ, int localX, int localZ) throws IOException {
         // Decompress chunk data from the MCA file
@@ -74,7 +74,9 @@ public class RegionFileLoader {
     }
 
     /**
-     * Validate that a file is a valid MCA file (checking through the name)
+     * Validate that a file has a valid MCA file name format
+     * <p>
+     * It follows this format: {@code r.x.z.mca} - where {@code x} and {@code z} are the region coordinates.
      */
     public static boolean isValidMCAFile(Path file) {
         try {
@@ -99,7 +101,7 @@ public class RegionFileLoader {
     private static void setupLazyLoading(RegionFile regionFile, Path file) {
         regionFile.setChunkLoader((lX, lZ) -> {
             try {
-                // Get (cached) reader for the region file
+                // Get (maybe cached) reader for the given region file
                 MCAReader reader = MCAReaderCache.get(file);
                 RegionChunkEntry entry = regionFile.getEntry(lX, lZ);
 

@@ -3,7 +3,7 @@ package xyz.gamecrash.anvilaccess.model;
 import java.util.Map;
 
 /**
- * Representation of a block state, including its ID and properties. (Immutable)
+ * Immutable representation of a block state, including its ID and properties.
  */
 public record BlockState(String id, Map<String, String> properties) {
 
