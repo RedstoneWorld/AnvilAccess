@@ -28,6 +28,14 @@ public class WorldRegionManager {
             throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
     }
 
+    public WorldRegionManager(String path) {
+        this.worldFolder = Path.of(path);
+        regionFolder = worldFolder.resolve("region");
+
+        if (!Files.exists(regionFolder))
+            throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
+    }
+
     /**
      * Gets all region files in the world
      */
