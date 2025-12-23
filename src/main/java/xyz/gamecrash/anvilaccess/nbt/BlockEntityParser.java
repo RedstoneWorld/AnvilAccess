@@ -7,11 +7,14 @@ import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 
 /**
  * Class for parsing block entities out of NBT
+ * @see BlockEntityType
  */
 public class BlockEntityParser {
 
     /**
      * Returns a BlockEntity-Wrapper for given NBT data
+     * <p>
+     * See <a href="https://minecraft.wiki/w/Block_entity_format#Types">this Wiki entry</a> for a list of all existing block entities
      */
     public static BlockEntity fromNbt(CompoundTag nbt) {
         String id = nbt.getString("id", "unknown");
@@ -24,11 +27,11 @@ public class BlockEntityParser {
             case BARREL, CHEST, TRAPPED_CHEST, SHULKER_BOX -> new InventoryBlockEntity(nbt);
             case BEACON -> new BeaconBlockEntity(nbt);
             case BED -> new BlockEntity(nbt);
-            case BEEHIVE, BEE_NEST -> new BeehiveBlockEntity(nbt);
+            case BEEHIVE -> new BeehiveBlockEntity(nbt);
             case BELL -> new BlockEntity(nbt);
             case BLAST_FURNACE, FURNACE, SMOKER -> new FurnaceBlockEntity(nbt);
             case BREWING_STAND -> new BrewingStandBlockEntity(nbt);
-            case SUSPICIOUS_SAND, SUSPICIOUS_GRAVEL -> new BrushableBlockEntity(nbt);
+            case BRUSHABLE_BLOCK -> new BrushableBlockEntity(nbt);
             case CALIBRATED_SCULK_SENSOR, SCULK_SENSOR -> new SculkBlockEntity(nbt);
             case CAMPFIRE, SOUL_CAMPFIRE -> new CampfireBlockEntity(nbt);
             case CHISELED_BOOKSHELF -> new ChiseledBookshelfBlockEntity(nbt);
