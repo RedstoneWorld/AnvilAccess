@@ -13,6 +13,7 @@ import java.util.Set;
  * </p>
  */
 // TODO: get rid of the minecraft: (namespace key) at the beginning - maybe add when required?
+// TODO: it might be that I was stupid and actually typed out every block id itself instead of the associated block entity id -- pls validate
 public enum BlockEntityType {
     BANNER("minecraft:banner"),
     BARREL("minecraft:barrel"),
@@ -45,7 +46,7 @@ public enum BlockEntityType {
     END_GATEWAY("minecraft:end_gateway"),
     END_PORTAL("minecraft:end_portal"),
     FURNACE("minecraft:furnace"),
-    HANGING_SIGN("minecraft:oak_hanging_sign", "minecraft:spruce_hanging_sign", "minecraft:birch_hanging_sign", "minecraft:jungle_hanging_sign", "minecraft:acacia_hanging_sign",
+    HANGING_SIGN("minecraft:hanging_sign", "minecraft:oak_hanging_sign", "minecraft:spruce_hanging_sign", "minecraft:birch_hanging_sign", "minecraft:jungle_hanging_sign", "minecraft:acacia_hanging_sign",
         "minecraft:dark_oak_hanging_sign", "minecraft:mangrove_hanging_sign", "minecraft:cherry_hanging_sign", "minecraft:pale_oak_hanging_sign", "minecraft:bamboo_hanging_sign",
         "minecraft:crimson_hanging_sign", "minecraft:warped_hanging_sign", "minecraft:oak_wall_hanging_sign", "minecraft:spruce_wall_hanging_sign", "minecraft:birch_wall_hanging_sign",
         "minecraft:jungle_wall_hanging_sign", "minecraft:acacia_wall_hanging_sign", "minecraft:dark_oak_wall_hanging_sign", "minecraft:mangrove_wall_hanging_sign", "minecraft:cherry_wall_hanging_sign",
@@ -60,11 +61,11 @@ public enum BlockEntityType {
         "minecraft:yellow_shulker_box", "minecraft:lime_shulker_box", "minecraft:pink_shulker_box", "minecraft:gray_shulker_box", "minecraft:light_gray_shulker_box",
         "minecraft:cyan_shulker_box", "minecraft:purple_shulker_box", "minecraft:blue_shulker_box", "minecraft:brown_shulker_box", "minecraft:green_shulker_box",
         "minecraft:red_shulker_box", "minecraft:black_shulker_box"),
-    SIGN("minecraft:oak_sign", "minecraft:spruce_sign", "minecraft:birch_sign", "minecraft:jungle_sign", "minecraft:acacia_sign", "minecraft:dark_oak_sign", "minecraft:mangrove_sign",
+    SIGN("minecraft:sign", "minecraft:oak_sign", "minecraft:spruce_sign", "minecraft:birch_sign", "minecraft:jungle_sign", "minecraft:acacia_sign", "minecraft:dark_oak_sign", "minecraft:mangrove_sign",
         "minecraft:cherry_sign", "minecraft:pale_oak_sign", "minecraft:bamboo_sign", "minecraft:crimson_sign", "minecraft:warped_sign", "minecraft:oak_wall_sign", "minecraft:spruce_wall_sign",
         "minecraft:birch_wall_sign", "minecraft:jungle_wall_sign", "minecraft:acacia_wall_sign", "minecraft:dark_oak_wall_sign", "minecraft:mangrove_wall_sign", "minecraft:cherry_wall_sign",
         "minecraft:pale_oak_wall_sign", "minecraft:bamboo_wall_sign", "minecraft:crimson_wall_sign", "minecraft:warped_wall_sign"),
-    SKULL("minecraft:skeleton_skull", "minecraft:wither_skeleton_skull", "minecraft:zombie_head", "minecraft:player_head", "minecraft:creeper_head", "minecraft:dragon_head", "minecraft:piglin_head",
+    SKULL("minecraft:skull", "minecraft:skeleton_skull", "minecraft:wither_skeleton_skull", "minecraft:zombie_head", "minecraft:player_head", "minecraft:creeper_head", "minecraft:dragon_head", "minecraft:piglin_head",
         "minecraft:skeleton_wall_skull", "minecraft:wither_skeleton_wall_skull", "minecraft:zombie_wall_head", "minecraft:player_wall_head", "minecraft:creeper_wall_head", "minecraft:dragon_wall_head", "minecraft:piglin_wall_head"),
     SCULK_CATALYST("minecraft:sculk_catalyst"),
     SCULK_SENSOR("minecraft:sculk_sensor"),
