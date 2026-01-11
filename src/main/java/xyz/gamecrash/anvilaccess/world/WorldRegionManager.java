@@ -2,6 +2,7 @@ package xyz.gamecrash.anvilaccess.world;
 
 import lombok.Getter;
 import xyz.gamecrash.anvilaccess.io.RegionFileLoader;
+import xyz.gamecrash.anvilaccess.model.Block;
 import xyz.gamecrash.anvilaccess.model.Chunk;
 import xyz.gamecrash.anvilaccess.model.RegionFile;
 
@@ -72,6 +73,14 @@ public class WorldRegionManager {
         if (region.isEmpty()) return Optional.empty();
 
         return region.get().getWorldChunk(chunkX, chunkZ);
+    }
+
+    /**
+     * Gets a block at the given coordinates
+     */
+    public Optional<Block> getBlock(int x, int y, int z) {
+        Optional<Chunk> chunk = getChunk(x >> 4, z >> 4);
+        return chunk.map(c -> c.getBlock(x, y, z));
     }
 
     /**
