@@ -16,6 +16,7 @@ public class BlockEntityParser {
      * <p>
      * See <a href="https://minecraft.wiki/w/Block_entity_format#Types">this Wiki entry</a> for a list of all existing block entities
      */
+    @SuppressWarnings("DuplicateBranchesInSwitch")
     public static BlockEntity fromNbt(CompoundTag nbt) {
         String id = nbt.getString("id", "unknown");
         BlockEntityType type = BlockEntityType.fromId(id).orElseThrow(() -> new IllegalStateException("Unknown block entity type: " + id));
