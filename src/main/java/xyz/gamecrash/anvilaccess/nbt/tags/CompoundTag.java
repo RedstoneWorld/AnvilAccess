@@ -60,7 +60,7 @@ public class CompoundTag extends Tag {
      * Returns a set containing all tag names
      */
     public Set<String> getKeys() {
-        return new HashSet<>(tags.keySet());
+        return Set.copyOf(tags.keySet());
     }
 
     /**
