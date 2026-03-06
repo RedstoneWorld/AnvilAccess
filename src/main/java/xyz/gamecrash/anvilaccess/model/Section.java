@@ -26,7 +26,7 @@ public class Section {
     private final List<BlockState> palette;
     private final long[] blockStates;
 
-    private final int bitsPerBlock;
+    private final byte bitsPerBlock;
     private final int blocksPerLong;
     private final long mask;
 
@@ -40,7 +40,7 @@ public class Section {
             this.blocksPerLong = 0;
             this.mask = 0;
         } else {
-            this.bitsPerBlock = Math.max(4, Integer.SIZE - Integer.numberOfLeadingZeros(palette.size() - 1));
+            this.bitsPerBlock = (byte) Math.max(4, Integer.SIZE - Integer.numberOfLeadingZeros(palette.size() - 1));
             this.blocksPerLong = 64 / bitsPerBlock;
             this.mask = (1L << bitsPerBlock) - 1;
         }

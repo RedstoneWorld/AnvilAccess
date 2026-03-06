@@ -8,9 +8,7 @@ import xyz.gamecrash.anvilaccess.nbt.blockentities.base.BlockEntity;
 import xyz.gamecrash.anvilaccess.nbt.tags.CompoundTag;
 import xyz.gamecrash.anvilaccess.nbt.tags.ListTag;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,12 +20,24 @@ import java.util.stream.Collectors;
  */
 @SuppressWarnings("ClassCanBeRecord")
 @Getter
-@RequiredArgsConstructor
 public class Chunk {
     private final int chunkX;
     private final int chunkZ;
     private final CompoundTag nbt;
     private final List<Section> sections;
+    private final Map<Integer, Section> sectionLookupMap;
+
+    public Chunk(int chunkX, int chunkZ, CompoundTag nbt, List<Section> sections) {
+        this.chunkX = chunkX;
+        this.chunkZ = chunkZ;
+        this.nbt = nbt;
+        this.sections = sections;
+
+        sectionLookupMap = new HashMap<>(sections.size());
+        for (Section section : sections) {
+            sectionLookupMap.put(section.getYIndex(), section);
+        }
+    }
 
     /**
      * Gets a block at the given world coordinates
@@ -46,16 +56,14 @@ public class Chunk {
         int sectionY = y >> 4;
 
         // find the section that matches Y index
-        Optional<Section> section = sections.stream()
-            .filter(s -> s.getYIndex() == sectionY)
-            .findFirst();
+        Section section = sectionLookupMap.get(sectionY);
 
         // return air if section not found
-        if (section.isEmpty()) return new Block(new BlockState("minecraft:air"), x, y, z);
+        if (section == null) return new Block(new BlockState("minecraft:air"), x, y, z);
 
         // get local Y coordinate in the section
         int lY = y & 15;
-        BlockState state = section.get().getBlockState(lX, lY, lZ);
+        BlockState state = section.getBlockState(lX, lY, lZ);
 
         // create/return the block with state and coordinates
         return new Block(state, x, y, z);
@@ -81,10 +89,7 @@ public class Chunk {
      */
     public Optional<Section> getSection(int y) {
         int sectionY = y >> 4;
-
-        return sections.stream()
-            .filter(s -> s.getYIndex() == sectionY)
-            .findFirst();
+        return Optional.ofNullable(sectionLookupMap.get(sectionY));
     }
 
     /**
