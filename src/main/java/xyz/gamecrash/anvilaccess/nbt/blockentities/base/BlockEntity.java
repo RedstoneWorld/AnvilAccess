@@ -69,10 +69,6 @@ public class BlockEntity {
         return getByte("keepPacked") == 1;
     }
 
-    public CompoundTag getRawNBT() {
-        return nbt;
-    }
-
     @Override
     public String toString() {
         return String.format("BlockEntity[%s](%d;%d;%d)", getId(), getX(), getY(), getZ());

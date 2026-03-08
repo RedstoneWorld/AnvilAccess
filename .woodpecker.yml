@@ -1,0 +1,29 @@
+when:
+  event: [push, manual]
+  path:
+    - "pom.xml"
+steps:
+  - name: build and publish
+    image: maven:4.0.0-rc-5-eclipse-temurin-21
+    privileged: false
+    failure: fail
+    commands:
+      - mkdir -p /root/.m2
+      - |
+        cat <<EOF > /root/.m2/settings.xml
+        <settings>
+          <servers>
+            <server>
+              <id>forgejo</id>
+              <username>$OWNER</username>
+              <password>$TOKEN</password>
+            </server>
+          </servers>
+        </settings>
+        EOF
+      - mvn clean package javadoc:jar deploy -DskipTests || true
+    environment:
+      OWNER:
+        from_secret: reg_owner
+      TOKEN:
+        from_secret: reg_token

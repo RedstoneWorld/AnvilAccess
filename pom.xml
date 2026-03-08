@@ -44,4 +44,15 @@
             <version>1.10.2</version>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>game.crash's git</id>
+            <url>https://git.gamecrash.dev/api/packages/game.crash/maven</url>
+        </snapshotRepository>
+        <repository>
+            <id>cloudsmith</id>
+            <url>https://git.gamecrash.dev/api/packages/game.crash/maven</url>
+        </repository>
+    </distributionManagement>
 </project>

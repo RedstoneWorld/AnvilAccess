@@ -149,14 +149,26 @@ public class Chunk {
      * @param x World X Coord
      * @param y World Y Coord
      * @param z World Z Coord
-     * @return The block entity at the given coordinates, or empty if none exists
+     * @return The block entity nbt compound at the given coordinates, or empty if none exists
      */
-    public Optional<CompoundTag> getBlockEntity(int x, int y, int z) {
+    public Optional<CompoundTag> getBlockEntityCompound(int x, int y, int z) {
         return getBlockEntityCompounds().stream()
             .filter(be -> be.getInt("x", Integer.MIN_VALUE) == x &&
                 be.getInt("y", Integer.MIN_VALUE) == y &&
                 be.getInt("z", Integer.MIN_VALUE) == z)
             .findFirst();
+    }
+
+    /**
+     * Gets a block entity at the given world coordinates
+     *
+     * @param x World X Coord
+     * @param y World Y Coord
+     * @param z World Z Coord
+     * @return The block entity at the given coordinates, or empty if none exists
+     */
+    public Optional<BlockEntity> getBlockEntity(int x, int y, int z) {
+        return getBlockEntityCompound(x, y, z).map(BlockEntityParser::fromNbt);
     }
 
     /**
