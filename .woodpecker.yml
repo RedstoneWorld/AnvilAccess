@@ -14,7 +14,7 @@ steps:
         <settings>
           <servers>
             <server>
-              <id>forgejo</id>
+              <id>gamecrash-git</id>
               <username>$OWNER</username>
               <password>$TOKEN</password>
             </server>

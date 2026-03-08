@@ -47,11 +47,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>game.crash's git</id>
+            <id>gamecrash-git</id>
             <url>https://git.gamecrash.dev/api/packages/game.crash/maven</url>
         </snapshotRepository>
         <repository>
-            <id>cloudsmith</id>
+            <id>gamecrash-git</id>
             <url>https://git.gamecrash.dev/api/packages/game.crash/maven</url>
         </repository>
     </distributionManagement>
