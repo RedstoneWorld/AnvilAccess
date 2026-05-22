@@ -216,9 +216,7 @@ public class CompoundTag extends Tag {
 
     @Override
     public String toString() {
-        if (tags.isEmpty()) {
-            return "{}";
-        }
+        if (tags.isEmpty()) return "{}";
 
         StringBuilder sb = new StringBuilder("{");
         for (Map.Entry<String, Tag> entry : tags.entrySet()) {

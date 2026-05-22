@@ -26,6 +26,18 @@ public class TagParser {
     }
 
     /**
+     * Reads an NBT tag with known tag type, but a "null" name
+     */
+
+    public static Tag readKnownTag(DataInputStream input) throws IOException {
+        byte typeId = input.readByte();
+        TagType type = TagType.fromId(typeId);
+        input.readShort(); // basically a namedtag, but without the name
+
+        return readTag(input, type);
+    }
+
+    /**
      * Reads an unnamed NBT tag from the given input stream
      */
     public static Tag readTag(DataInputStream input, TagType type) throws IOException {
