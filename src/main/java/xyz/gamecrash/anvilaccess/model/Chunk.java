@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
  * @see RegionFile
  * @see RegionChunkEntry
  */
-@SuppressWarnings("ClassCanBeRecord")
 @Getter
 public class Chunk {
     private final int chunkX;
@@ -26,12 +25,14 @@ public class Chunk {
     private final CompoundTag nbt;
     private final List<Section> sections;
     private final Map<Integer, Section> sectionLookupMap;
+    private final int dataVersion;
 
     public Chunk(int chunkX, int chunkZ, CompoundTag nbt, List<Section> sections) {
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
         this.nbt = nbt;
         this.sections = sections;
+        dataVersion = nbt.getInt("DataVersion", 0);
 
         sectionLookupMap = new HashMap<>(sections.size());
         for (Section section : sections) {
