@@ -18,30 +18,30 @@ import java.util.stream.Stream;
  */
 @Getter
 public class WorldRegionManager {
-    private final Path worldFolder;
-    private final Path regionFolder;
+    private final Path worldDirectory;
+    private final Path regionDirectory;
 
     public WorldRegionManager(Path worldFolder) {
-        this.worldFolder = worldFolder;
-        regionFolder = worldFolder.resolve("region");
+        this.worldDirectory = worldFolder;
+        regionDirectory = worldFolder.resolve("region");
 
-        if (!Files.exists(regionFolder))
-            throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
+        if (!Files.exists(regionDirectory))
+            throw new IllegalArgumentException("Region directory does not exist: " + regionDirectory);
     }
 
     public WorldRegionManager(String path) {
-        this.worldFolder = Path.of(path);
-        regionFolder = worldFolder.resolve("region");
+        this.worldDirectory = Path.of(path);
+        regionDirectory = worldDirectory.resolve("region");
 
-        if (!Files.exists(regionFolder))
-            throw new IllegalArgumentException("Region folder does not exist: " + regionFolder);
+        if (!Files.exists(regionDirectory))
+            throw new IllegalArgumentException("Region directory does not exist: " + regionDirectory);
     }
 
     /**
      * Gets all region files in the world
      */
     public List<RegionFile> getRegionFiles() throws IOException {
-        try (Stream<Path> paths = Files.walk(regionFolder)) {
+        try (Stream<Path> paths = Files.walk(regionDirectory)) {
             return paths
                 .filter(Files::isRegularFile)
                 .filter(RegionFileLoader::isValidMCAFile)
@@ -56,7 +56,7 @@ public class WorldRegionManager {
      * Gets a region file by coordinates
      */
     public Optional<RegionFile> getRegion(int regionX, int regionZ) {
-        Path regionFile = regionFolder.resolve(String.format("r.%d.%d.mca", regionX, regionZ));
+        Path regionFile = regionDirectory.resolve(String.format("r.%d.%d.mca", regionX, regionZ));
         if (!Files.exists(regionFile)) return Optional.empty();
 
         return loadRegionSafely(regionFile);
@@ -95,10 +95,10 @@ public class WorldRegionManager {
      */
     public boolean validate() {
         try {
-            if (!Files.exists(worldFolder)) return false;
-            if (!Files.exists(regionFolder)) return false;
+            if (!Files.exists(worldDirectory)) return false;
+            if (!Files.exists(regionDirectory)) return false;
 
-            try (Stream<Path> paths = Files.walk(regionFolder, 1)) {
+            try (Stream<Path> paths = Files.walk(regionDirectory, 1)) {
                 return paths
                     .filter(Files::isRegularFile)
                     .anyMatch(RegionFileLoader::isValidMCAFile);
@@ -112,7 +112,7 @@ public class WorldRegionManager {
      * Gets the total number of regions
      */
     public long getRegionCount() throws IOException {
-        try (Stream<Path> paths = Files.walk(regionFolder, 1)) {
+        try (Stream<Path> paths = Files.walk(regionDirectory, 1)) {
             return paths
                 .filter(Files::isRegularFile)
                 .filter(RegionFileLoader::isValidMCAFile)
