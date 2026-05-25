@@ -198,6 +198,14 @@ public class CompoundTag extends Tag {
     }
 
     /**
+     * Gets a boolean, with a fallback value.
+     * <bold>Note: NBT officially has no boolean type, so internally the byte tag is being used as a substitute with a value of either 0 or 1.</bold>
+     */
+    public boolean getBoolean(String name, boolean defaultValue) {
+        return getByte(name, (byte) (defaultValue ? 1 : 0)) == 1;
+    }
+
+    /**
      * Returns the key-value-pair of this NBT compound
      */
     @Override

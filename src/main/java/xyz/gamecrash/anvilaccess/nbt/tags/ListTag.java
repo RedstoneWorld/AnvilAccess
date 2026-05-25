@@ -78,6 +78,23 @@ public class ListTag extends Tag {
     }
 
     /**
+     * Gets a double tag at given index
+     */
+    public double getDouble(int index) {
+        Tag tag = get(index);
+        if (tag instanceof DoubleTag doubleTag) return doubleTag.getValue();
+
+        throw new ClassCastException("List tag type does not match DoubleTag");
+    }
+
+    public float getFloat(int index) {
+        Tag tag = get(index);
+        if (tag instanceof FloatTag floatTag) return floatTag.getValue();
+
+        throw new ClassCastException("List tag type does not match FloatTag");
+    }
+
+    /**
      * Set a tag at specified index
      */
     public void set(int index, Tag tag) {
