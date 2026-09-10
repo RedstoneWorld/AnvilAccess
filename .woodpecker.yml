@@ -1,7 +1,5 @@
 when:
-  event: [push, manual]
-  path:
-    - "pom.xml"
+  event: [tag, manual]
 steps:
   - name: build and publish
     image: maven:4.0.0-rc-5-eclipse-temurin-21

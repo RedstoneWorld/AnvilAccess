@@ -27,7 +27,6 @@ public class BlockEntityParser {
             case BANNER -> new BannerBlockEntity(nbt);
             case BARREL, CHEST, TRAPPED_CHEST, SHULKER_BOX -> new InventoryBlockEntity(nbt);
             case BEACON -> new BeaconBlockEntity(nbt);
-            case BED -> new BlockEntity(nbt);
             case BEEHIVE -> new BeehiveBlockEntity(nbt);
             case BELL -> new BlockEntity(nbt);
             case BLAST_FURNACE, FURNACE, SMOKER -> new FurnaceBlockEntity(nbt);
@@ -56,11 +55,14 @@ public class BlockEntityParser {
             case LECTERN -> new LecternBlockEntity(nbt);
             case MOB_SPAWNER -> new SpawnerBlockEntity(nbt);
             case MOVING_PISTON -> new MovingPistonBlockEntity(nbt);
+            case POTENT_SULFUR -> new PotentSulfurBlockEntity(nbt);
             case SKULL -> new SkullBlockEntity(nbt);
             case SCULK_CATALYST -> new SculkCatalystBlockEntity(nbt);
             case SCULK_SHRIEKER -> new SculkBlockEntity(nbt);
             case SHELF -> new ShelfBlockEntity(nbt);
             case STRUCTURE_BLOCK -> new StructureBlockEntity(nbt);
+            case TEST_BLOCK -> new TestBlockEntity(nbt);
+            case TEST_INSTANCE_BLOCK -> new TestInstanceBlockEntity(nbt);
             case TRIAL_SPAWNER -> new TrialSpawnerBlockEntity(nbt);
             case VAULT -> new VaultBlockEntity(nbt);
         };

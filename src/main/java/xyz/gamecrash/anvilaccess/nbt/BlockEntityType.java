@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Enum containing all possible block entity types
  * <p>
- * Note: this is on the version of 1.21.11
+ * This is on the state of the Minecraft version 26.2
  * </p>
  * @see BlockEntityParser
  */
@@ -18,7 +18,6 @@ public enum BlockEntityType {
     BANNER("minecraft:banner"),
     BARREL("minecraft:barrel"),
     BEACON("minecraft:beacon"),
-    BED("minecraft:bed"),
     BEEHIVE("minecraft:beehive"),
     BELL("minecraft:bell"),
     BLAST_FURNACE("minecraft:blast_furnace"),
@@ -50,6 +49,7 @@ public enum BlockEntityType {
     LECTERN("minecraft:lectern"),
     MOB_SPAWNER("minecraft:mob_spawner"),
     MOVING_PISTON("minecraft:piston"),
+    POTENT_SULFUR("minecraft:potent_sulfur"),
     SCULK_CATALYST("minecraft:sculk_catalyst"),
     SCULK_SENSOR("minecraft:sculk_sensor"),
     SCULK_SHRIEKER("minecraft:sculk_shrieker"),
@@ -60,6 +60,8 @@ public enum BlockEntityType {
     SMOKER("minecraft:smoker"),
     SOUL_CAMPFIRE("minecraft:soul_campfire"),
     STRUCTURE_BLOCK("minecraft:structure_block"),
+    TEST_BLOCK("minecraft:test_block"),
+    TEST_INSTANCE_BLOCK("minecraft:test_instance_block"),
     TRAPPED_CHEST("minecraft:trapped_chest"),
     TRIAL_SPAWNER("minecraft:trial_spawner"),
     VAULT("minecraft:vault");
