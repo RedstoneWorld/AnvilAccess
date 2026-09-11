@@ -16,9 +16,13 @@ public class ListTag extends Tag<List<Tag<?>>> {
     private final TagType elementType;
 
     public ListTag(TagType elementType) {
+        this(elementType, 0);
+    }
+
+    public ListTag(TagType elementType, int initialCapacity) {
         super(TagType.LIST);
         this.elementType = elementType;
-        this.value = new ArrayList<>();
+        this.value = new ArrayList<>(initialCapacity);
     }
 
     public ListTag(TagType elementType, List<Tag<?>> value) {
@@ -89,9 +93,9 @@ public class ListTag extends Tag<List<Tag<?>>> {
 
     @Override
     public ListTag copy() {
-        List<Tag<?>> copiedTags = new ArrayList<>();
+        List<Tag<?>> copiedTags = new ArrayList<>(value.size());
         for (Tag<?> tag : value) copiedTags.add(tag.copy());
-        ListTag copy = new ListTag(elementType);
+        ListTag copy = new ListTag(elementType, copiedTags.size());
         copy.value = copiedTags;
         return copy;
     }

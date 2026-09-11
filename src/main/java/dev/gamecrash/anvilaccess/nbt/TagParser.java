@@ -74,7 +74,7 @@ public class TagParser {
             throw new IOException("List with END element type must be empty");
         }
 
-        ListTag list = new ListTag(type);
+        ListTag list = new ListTag(type, len);
         for (int i = 0; i < len; i++) {
             list.add(readTag(in, type, depth + 1));
         }

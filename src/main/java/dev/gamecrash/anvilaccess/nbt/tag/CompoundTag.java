@@ -153,7 +153,7 @@ public class CompoundTag extends Tag<Map<String, Tag<?>>> {
 
     @Override
     public CompoundTag copy() {
-        Map<String, Tag<?>> copiedTags = new LinkedHashMap<>(value.size());
+        Map<String, Tag<?>> copiedTags = new LinkedHashMap<>(hashMapCapacity(value.size()));
         for (Map.Entry<String, Tag<?>> entry : value.entrySet()) {
             copiedTags.put(entry.getKey(), entry.getValue().copy());
         }
@@ -188,5 +188,11 @@ public class CompoundTag extends Tag<Map<String, Tag<?>>> {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    private static int hashMapCapacity(int expectedSize) {
+        // 0.75 is default HashMap load / capacity factor, if map is tiny, then we'll use the size + 1; this generally avoids immediate resizing
+        if (expectedSize < 3) return expectedSize + 1;
+        return (int) (expectedSize / 0.75f) + 1;
     }
 }
