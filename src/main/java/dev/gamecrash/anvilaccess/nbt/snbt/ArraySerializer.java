@@ -35,24 +35,24 @@ public class ArraySerializer implements Serializer {
         return builder.append(END_TAG).toString();
     }
 
-    private <T> String serializeIntArray(IntArrayTag tag) {
+    private String serializeIntArray(IntArrayTag tag) {
         StringBuilder builder = new StringBuilder(START_TAG);
-        builder.append("B;");
+        builder.append("I;");
         int[] val = tag.getValue();
         for (int i = 0; i < val.length; i++) {
-            builder.append(val[i]).append("b");
+            builder.append(val[i]);
             if (i + 1 < val.length) builder.append(",");
         }
 
         return builder.append(END_TAG).toString();
     }
 
-    private <T> String serializeLongArray(LongArrayTag tag) {
+    private String serializeLongArray(LongArrayTag tag) {
         StringBuilder builder = new StringBuilder(START_TAG);
-        builder.append("B;");
+        builder.append("L;");
         long[] val = tag.getValue();
         for (int i = 0; i < val.length; i++) {
-            builder.append(val[i]).append("b");
+            builder.append(val[i]).append("l");
             if (i + 1 < val.length) builder.append(",");
         }
 
