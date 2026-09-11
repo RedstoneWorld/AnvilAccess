@@ -3,6 +3,8 @@ package dev.gamecrash.anvilaccess.nbt.tag;
 import dev.gamecrash.anvilaccess.nbt.TagType;
 
 public class EndTag extends Tag<Void> {
+    public static EndTag val = new EndTag();
+
     public EndTag() {
         super(TagType.END);
     }
@@ -17,7 +19,7 @@ public class EndTag extends Tag<Void> {
 
     @Override
     public Tag<Void> copy() {
-        return new EndTag();
+        return this;
     }
 
     @Override
@@ -26,7 +28,12 @@ public class EndTag extends Tag<Void> {
     }
 
     @Override
-    public boolean equals(Tag<Void> other) {
-        return false;
+    public boolean equals(Object obj) {
+        return obj instanceof EndTag;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 }

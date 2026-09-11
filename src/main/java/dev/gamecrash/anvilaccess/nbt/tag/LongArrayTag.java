@@ -25,7 +25,7 @@ public class LongArrayTag extends Tag<long[]> {
 
     @Override
     public long[] getValue() {
-        return value.clone();
+        return value;
     }
 
     @Override
@@ -35,17 +35,12 @@ public class LongArrayTag extends Tag<long[]> {
 
     @Override
     public LongArrayTag copy() {
-        return new LongArrayTag(value);
+        return new LongArrayTag(value.clone());
     }
 
     @Override
     public String toString() {
         return "[L;" + value.length + " longs]";
-    }
-
-    @Override
-    public boolean equals(Tag<long[]> other) {
-        return false;
     }
 
     @Override

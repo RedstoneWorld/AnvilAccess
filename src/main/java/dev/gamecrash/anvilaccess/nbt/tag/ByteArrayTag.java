@@ -35,7 +35,7 @@ public class ByteArrayTag extends Tag<byte[]> {
 
     @Override
     public Tag<byte[]> copy() {
-        return new ByteArrayTag(value);
+        return new ByteArrayTag(value.clone());
     }
 
     @Override
@@ -44,10 +44,10 @@ public class ByteArrayTag extends Tag<byte[]> {
     }
 
     @Override
-    public boolean equals(Tag<byte[]> other) {
-        if (this == other) return true;
-        if (!(other instanceof ByteArrayTag tag)) return false;
-        return Arrays.equals(value, tag.value);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof ByteArrayTag other)) return false;
+        return Arrays.equals(value, other.value);
     }
 
     @Override

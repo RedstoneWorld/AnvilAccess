@@ -36,7 +36,14 @@ public class IntTag extends Tag<Integer> {
     }
 
     @Override
-    public boolean equals(Tag<Integer> other) {
-        return other.getValue() == value;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof IntTag other)) return false;
+        return value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(value);
     }
 }

@@ -25,7 +25,7 @@ public class IntArrayTag extends Tag<int[]> {
 
     @Override
     public int[] getValue() {
-        return value.clone();
+        return value;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class IntArrayTag extends Tag<int[]> {
 
     @Override
     public IntArrayTag copy() {
-        return new IntArrayTag(value);
+        return new IntArrayTag(value.clone());
     }
 
     @Override
@@ -44,9 +44,14 @@ public class IntArrayTag extends Tag<int[]> {
     }
 
     @Override
-    public boolean equals(Tag<int[]> other) {
-        if (this == other) return true;
-        if (!(other instanceof IntArrayTag tag)) return false;
-        return Arrays.equals(value, tag.value);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof IntArrayTag other)) return false;
+        return Arrays.equals(value, other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(value);
     }
 }

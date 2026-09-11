@@ -4,8 +4,8 @@ import lombok.Getter;
 import dev.gamecrash.anvilaccess.nbt.TagType;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * List tag storing a list of tags of the same type
@@ -24,12 +24,8 @@ public class ListTag extends Tag<List<Tag<?>>> {
     public ListTag(TagType elementType, List<Tag<?>> value) {
         super(TagType.LIST);
         this.elementType = elementType;
-        this.value = new ArrayList<>(value);
-
-        for (Tag<?> tag : value) {
-            if (tag.getType() != elementType)
-                throw new IllegalArgumentException("All tags must be of type " + elementType);
-        }
+        this.value = new ArrayList<>(Objects.requireNonNull(value, "value"));
+        validateElements(this.value);
     }
 
     public void add(Tag<?> tag) {
@@ -86,15 +82,18 @@ public class ListTag extends Tag<List<Tag<?>>> {
 
     @Override
     public void setValue(List<Tag<?>> value) {
-        if (value.getFirst().getType() != elementType) throw new IllegalArgumentException("Given ListTag does not");
-        this.value = value;
+        Objects.requireNonNull(value, "value");
+        validateElements(value);
+        this.value = new ArrayList<>(value);
     }
 
     @Override
     public ListTag copy() {
         List<Tag<?>> copiedTags = new ArrayList<>();
         for (Tag<?> tag : value) copiedTags.add(tag.copy());
-        return new ListTag(elementType, copiedTags);
+        ListTag copy = new ListTag(elementType);
+        copy.value = copiedTags;
+        return copy;
     }
 
     @Override
@@ -109,7 +108,22 @@ public class ListTag extends Tag<List<Tag<?>>> {
     }
 
     @Override
-    public boolean equals(Tag<List<Tag<?>>> other) {
-        return false;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof ListTag other)) return false;
+        return elementType == other.elementType && value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(elementType, value);
+    }
+
+    private void validateElements(List<Tag<?>> tags) {
+        for (Tag<?> tag : tags) {
+            if (tag.getType() != elementType) {
+                throw new IllegalArgumentException("All tags must be of type " + elementType);
+            }
+        }
     }
 }

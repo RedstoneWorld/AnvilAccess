@@ -36,7 +36,14 @@ public class LongTag extends Tag<Long> {
     }
 
     @Override
-    public boolean equals(Tag<Long> other) {
-        return other.getValue() == value;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof LongTag other)) return false;
+        return value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(value);
     }
 }

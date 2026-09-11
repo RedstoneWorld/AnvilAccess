@@ -2,6 +2,8 @@ package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
 
+import java.util.Objects;
+
 /**
  * String tag
  */
@@ -20,7 +22,7 @@ public class StringTag extends Tag<String> {
 
     @Override
     public void setValue(String value) {
-        this.value = value;
+        this.value = value != null ? value : "";
     }
 
     @Override
@@ -34,7 +36,14 @@ public class StringTag extends Tag<String> {
     }
 
     @Override
-    public boolean equals(Tag<String> other) {
-        return other.getValue().equals(value);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof StringTag other)) return false;
+        return Objects.equals(value, other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(value);
     }
 }

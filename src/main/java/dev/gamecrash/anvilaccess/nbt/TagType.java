@@ -3,6 +3,10 @@ package dev.gamecrash.anvilaccess.nbt;
 
 import lombok.Getter;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * Enum representing all existing NBT tag types
  * <p>
@@ -29,14 +33,14 @@ public enum TagType {
     @Getter
     private final int id;
 
+    private static final TagType[] BY_ID = values();
+
     TagType(int id) {
         this.id = id;
     }
 
     public static TagType fromId(int id) {
-        for (TagType type : values()) {
-            if (type.id == id) return type;
-        }
+        if (id >= 0 && id < BY_ID.length) return BY_ID[id];
         throw new IllegalArgumentException("Unknown tag type id: " + id);
     }
 }

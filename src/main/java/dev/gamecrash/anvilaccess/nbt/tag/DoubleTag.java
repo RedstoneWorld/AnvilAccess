@@ -36,7 +36,14 @@ public class DoubleTag extends Tag<Double> {
     }
 
     @Override
-    public boolean equals(Tag<Double> other) {
-        return other.getValue() == value;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof DoubleTag other)) return false;
+        return Double.compare(value, other.value) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Double.hashCode(value);
     }
 }

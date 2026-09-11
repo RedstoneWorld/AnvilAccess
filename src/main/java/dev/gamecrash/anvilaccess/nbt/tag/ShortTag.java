@@ -36,7 +36,14 @@ public class ShortTag extends Tag<Short> {
     }
 
     @Override
-    public boolean equals(Tag<Short> other) {
-        return other.getValue() == value;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof ShortTag other)) return false;
+        return value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Short.hashCode(value);
     }
 }

@@ -36,7 +36,14 @@ public class FloatTag extends Tag<Float> {
     }
 
     @Override
-    public boolean equals(Tag<Float> other) {
-        return other.getValue() == value;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof FloatTag other)) return false;
+        return Float.compare(value, other.value) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Float.hashCode(value);
     }
 }

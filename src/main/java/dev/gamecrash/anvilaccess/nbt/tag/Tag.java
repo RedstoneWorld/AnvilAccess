@@ -25,5 +25,5 @@ public abstract class Tag<T> {
 
     public abstract String toString();
 
-    public abstract boolean equals(Tag<T> other);
+    public abstract boolean equals(Object obj);
 }

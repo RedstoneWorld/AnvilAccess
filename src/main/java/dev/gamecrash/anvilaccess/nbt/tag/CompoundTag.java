@@ -2,10 +2,11 @@ package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.Objects;
 
 /**
  * Compound tag storing key-value-pairs of other tags
@@ -45,7 +46,7 @@ public class CompoundTag extends Tag<Map<String, Tag<?>>> {
     }
 
     public Set<String> getKeys() {
-        return Set.copyOf(value.keySet());
+        return Collections.unmodifiableSet(value.keySet());
     }
 
     public int size() {
@@ -147,12 +148,19 @@ public class CompoundTag extends Tag<Map<String, Tag<?>>> {
 
     @Override
     public void setValue(Map<String, Tag<?>> value) {
-        this.value = value;
+        this.value = new LinkedHashMap<>(Objects.requireNonNull(value, "value"));
     }
 
     @Override
     public CompoundTag copy() {
-        return new CompoundTag(new LinkedHashMap<>(value));
+        Map<String, Tag<?>> copiedTags = new LinkedHashMap<>(value.size());
+        for (Map.Entry<String, Tag<?>> entry : value.entrySet()) {
+            copiedTags.put(entry.getKey(), entry.getValue().copy());
+        }
+
+        CompoundTag copy = new CompoundTag();
+        copy.value = copiedTags;
+        return copy;
     }
 
     @Override
@@ -171,9 +179,14 @@ public class CompoundTag extends Tag<Map<String, Tag<?>>> {
     }
 
     @Override
-    public boolean equals(Tag<Map<String, Tag<?>>> other) {
-        if (this == other) return true;
-        if (!(other instanceof CompoundTag)) return false;
-        return value.equals(other.getValue());
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof CompoundTag other)) return false;
+        return value.equals(other.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
     }
 }

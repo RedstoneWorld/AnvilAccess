@@ -3,6 +3,8 @@ package dev.gamecrash.anvilaccess.nbt.tag;
 import dev.gamecrash.anvilaccess.nbt.TagType;
 import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
+import java.util.Objects;
+
 /**
  * Byte tag
  */
@@ -40,7 +42,14 @@ public class ByteTag extends Tag<Byte> {
     }
 
     @Override
-    public boolean equals(Tag<Byte> other) {
-        return this.value == other.getValue();
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof ByteTag other)) return false;
+        return value == other.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Byte.hashCode(value);
     }
 }
