@@ -1,10 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 /**
  * Byte tag
  */
+@Serializable
 public class ByteTag extends Tag<Byte> {
     private byte value;
 
@@ -21,6 +23,10 @@ public class ByteTag extends Tag<Byte> {
     @Override
     public void setValue(Byte value) {
         this.value = value;
+    }
+
+    public boolean asBoolean() {
+        return value == 1;
     }
 
     @Override

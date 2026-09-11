@@ -1,10 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 /**
  * Long tag
  */
+@Serializable
 public class LongTag extends Tag<Long> {
     private long value;
 
@@ -30,7 +32,7 @@ public class LongTag extends Tag<Long> {
 
     @Override
     public String toString() {
-        return value + "L";
+        return value + "l";
     }
 
     @Override

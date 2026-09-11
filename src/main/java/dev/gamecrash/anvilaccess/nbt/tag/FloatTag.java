@@ -1,9 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
+
 /**
  * Float tag
  */
+@Serializable
 public class FloatTag extends Tag<Float> {
     private float value;
 

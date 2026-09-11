@@ -1,10 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 /**
  * Double tag
  */
+@Serializable
 public class DoubleTag extends Tag<Double> {
     private double value;
 
@@ -30,7 +32,7 @@ public class DoubleTag extends Tag<Double> {
 
     @Override
     public String toString() {
-        return value + "d";
+        return String.valueOf(value);
     }
 
     @Override

@@ -1,10 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 /**
  * Short tag
  */
+@Serializable
 public class ShortTag extends Tag<Short> {
     private short value;
 

@@ -1,12 +1,15 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.ArraySerializer;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 import java.util.Arrays;
 
 /**
  * Long array tag
  */
+@Serializable(serializer = ArraySerializer.class)
 public class LongArrayTag extends Tag<long[]> {
     private long[] value;
 

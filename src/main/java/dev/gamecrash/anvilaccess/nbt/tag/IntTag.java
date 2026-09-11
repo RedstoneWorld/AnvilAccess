@@ -1,10 +1,12 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 /**
  * Int tag
  */
+@Serializable
 public class IntTag extends Tag<Integer> {
     private int value;
 

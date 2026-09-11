@@ -74,7 +74,6 @@ public class TagParser {
 
     private static CompoundTag readCompound(DataInputStream in) throws IOException {
         CompoundTag compound = new CompoundTag();
-
         while (true) {
             byte typeId = in.readByte();
             if (typeId == TagType.END.getId()) break;
