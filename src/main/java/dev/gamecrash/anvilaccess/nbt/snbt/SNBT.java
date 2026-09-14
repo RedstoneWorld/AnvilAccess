@@ -12,7 +12,7 @@ public class SNBT {
     public String serialize(Tag<?> tag) {
         Serializer s = getSerializer(getSerializerClass(tag));
 
-        return s.serialize(tag);
+        return s.serialize(tag, this);
     }
 
     private Serializer getSerializer(Class<? extends Serializer> clazz) {

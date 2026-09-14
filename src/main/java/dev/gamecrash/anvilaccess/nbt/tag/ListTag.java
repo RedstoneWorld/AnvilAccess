@@ -1,5 +1,7 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
+import dev.gamecrash.anvilaccess.nbt.snbt.ComplexSerializer;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 import lombok.Getter;
 import dev.gamecrash.anvilaccess.nbt.TagType;
 
@@ -10,6 +12,7 @@ import java.util.Objects;
 /**
  * List tag storing a list of tags of the same type
  */
+@Serializable(serializer = ComplexSerializer.class)
 public class ListTag extends Tag<List<Tag<?>>> {
     private List<Tag<?>> value;
     @Getter

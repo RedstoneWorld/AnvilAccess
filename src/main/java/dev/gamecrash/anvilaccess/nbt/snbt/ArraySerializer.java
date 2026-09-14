@@ -10,7 +10,7 @@ public class ArraySerializer implements Serializer {
     static final String END_TAG = "]";
 
     @Override
-    public String serialize(Tag<?> tag) {
+    public String serialize(Tag<?> tag, SNBT unused) {
         assert tag instanceof ByteArrayTag
             || tag instanceof IntArrayTag
             || tag instanceof LongArrayTag;

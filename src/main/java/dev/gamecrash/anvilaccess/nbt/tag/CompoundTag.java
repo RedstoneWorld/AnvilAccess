@@ -1,6 +1,8 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.ComplexSerializer;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
@@ -11,6 +13,7 @@ import java.util.Objects;
 /**
  * Compound tag storing key-value-pairs of other tags
  */
+@Serializable(serializer = ComplexSerializer.class)
 public class CompoundTag extends Tag<Map<String, Tag<?>>> {
     private Map<String, Tag<?>> value;
 

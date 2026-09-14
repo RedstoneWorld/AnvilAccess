@@ -12,9 +12,7 @@ public class TagParser {
     }
 
     private static Tag<?> readTag(DataInputStream in, TagType type, int depth) throws IOException {
-        if (depth > Tag.MAX_DEPTH) {
-            throw new IOException("NBT structure exceeds max depth of " + Tag.MAX_DEPTH);
-        }
+        if (depth > Tag.MAX_DEPTH) throw new IOException("NBT structure exceeds max depth of " + Tag.MAX_DEPTH);
 
         return switch (type) {
             case END -> EndTag.val;
@@ -70,9 +68,7 @@ public class TagParser {
         if (len < 0) throw new IOException("Negative length: " + len);
 
         TagType type = TagType.fromId(typeId);
-        if (type == TagType.END && len > 0) {
-            throw new IOException("List with END element type must be empty");
-        }
+        if (type == TagType.END && len > 0) throw new IOException("List with END element type must be empty");
 
         ListTag list = new ListTag(type, len);
         for (int i = 0; i < len; i++) {
