@@ -1,12 +1,14 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
 
 import java.util.Objects;
 
 /**
  * String tag
  */
+@Serializable
 public class StringTag extends Tag<String> {
     private String value;
 

@@ -13,6 +13,7 @@ public class ComplexSerializer implements Serializer {
     static final String LIST_END = "]";
     static final String SEPARATOR = ",";
     static final String NAME_VALUE_DELIMITER = ":";
+    static final String KEY_DELIMITER = "\"";
 
     @Override
     public String serialize(Tag<?> tag, SNBT instance) {
@@ -26,12 +27,14 @@ public class ComplexSerializer implements Serializer {
         };
     }
 
-    public String serializeCompound(CompoundTag tag, SNBT instance) {
+    private String serializeCompound(CompoundTag tag, SNBT instance) {
         if (tag.isEmpty()) return COMPOUND_START + COMPOUND_END;
 
         StringBuilder sb = new StringBuilder(COMPOUND_START);
         for (Map.Entry<String, Tag<?>> entry : tag.getValue().entrySet()) {
-            sb.append(entry.getKey())
+            sb.append(KEY_DELIMITER)
+                .append(entry.getKey())
+                .append(KEY_DELIMITER)
                 .append(NAME_VALUE_DELIMITER)
                 .append(
                     instance.serialize(entry.getValue())
@@ -43,7 +46,7 @@ public class ComplexSerializer implements Serializer {
         return sb.toString();
     }
 
-    public String serializeList(ListTag tag, SNBT instance) {
+    private String serializeList(ListTag tag, SNBT instance) {
         if (tag.isEmpty()) return LIST_START + LIST_END;
 
         StringBuilder builder = new StringBuilder(LIST_START);
