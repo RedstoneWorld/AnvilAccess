@@ -89,11 +89,11 @@ public class MCAReader implements AutoCloseable {
         // read chunk header (4b length + 1b compression type) -> https://minecraft.wiki/w/Region_file_format#Payload
         int dataOffset = (int) absoluteOffset;
         // "build" the length out of the four bytes (the mask of 0xFF is required to "convert" the byte into a positive value)
-        int length = ((fileData[dataOffset] & 0xFF) << 24) |
+        int length =
+            ((fileData[dataOffset]     & 0xFF) << 24) |
             ((fileData[dataOffset + 1] & 0xFF) << 16) |
-            ((fileData[dataOffset + 2] & 0xFF) << 8) |
-            ((fileData[dataOffset + 3] & 0xFF)
-            );
+            ((fileData[dataOffset + 2] & 0xFF) << 8 ) |
+            ((fileData[dataOffset + 3] & 0xFF)      );
 
         // validate chunk data length
         if (length < 1 || length > entry.getSizeInByte()) throw new IOException("Chunk data length out of range");
