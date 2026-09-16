@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * Handles palette-based block storage and bit-packed block states.
  * <p>
  * Take a look at the <a href="https://minecraft.wiki/w/Chunk_format#NBT_structure">Chunk Format</a> Wiki entry under the {@code sections}
- * tag to see how things are stored.
+ * tag to see how things are stored. Also important: <a href="https://minecraft.wiki/w/Chunk_format#Block_format">Block Storage format</a>
  * @see Chunk
  * @see RegionFile
  * @see Block
