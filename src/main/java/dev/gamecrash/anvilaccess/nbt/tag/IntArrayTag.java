@@ -1,8 +1,8 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
-import dev.gamecrash.anvilaccess.nbt.snbt.ArraySerializer;
-import dev.gamecrash.anvilaccess.nbt.snbt.Serializable;
+import dev.gamecrash.anvilaccess.nbt.snbt.serializer.ArraySerializer;
+import dev.gamecrash.anvilaccess.nbt.snbt.serializer.Serializable;
 
 import java.util.Arrays;
 

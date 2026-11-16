@@ -1,5 +1,6 @@
-package dev.gamecrash.anvilaccess.nbt.snbt;
+package dev.gamecrash.anvilaccess.nbt.snbt.serializer;
 
+import dev.gamecrash.anvilaccess.nbt.snbt.SNBT;
 import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
 import dev.gamecrash.anvilaccess.nbt.tag.ListTag;
 import dev.gamecrash.anvilaccess.nbt.tag.Tag;

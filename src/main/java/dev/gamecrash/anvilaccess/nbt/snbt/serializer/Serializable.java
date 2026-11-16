@@ -1,4 +1,4 @@
-package dev.gamecrash.anvilaccess.nbt.snbt;
+package dev.gamecrash.anvilaccess.nbt.snbt.serializer;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
