@@ -1,0 +1,68 @@
+package dev.gamecrash.anvilaccess.nbt;
+
+import dev.gamecrash.anvilaccess.nbt.blockentities.*;
+import dev.gamecrash.anvilaccess.nbt.blockentities.base.*;
+import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
+
+/**
+ * Class for parsing block entities out of NBT
+ * @see dev.gamecrash.anvilaccess.nbt.BlockEntityType
+ */
+public class BlockEntityParser {
+
+    /**
+     * Returns a BlockEntity-Wrapper for given NBT data
+     * <p>
+     * See <a href="https://minecraft.wiki/w/Block_entity_format#Types">this Wiki entry</a> for a list of all existing block entities
+     */
+    @SuppressWarnings("DuplicateBranchesInSwitch")
+    public static BlockEntity fromNbt(CompoundTag nbt) {
+        String id = nbt.getString("id", "unknown");
+        BlockEntityType type = BlockEntityType.fromId(id).orElse(null);
+        if (type == null) return new BlockEntity(nbt);
+
+        return switch (type) {
+            case BANNER -> new BannerBlockEntity(nbt);
+            case BARREL, CHEST, TRAPPED_CHEST, SHULKER_BOX -> new InventoryBlockEntity(nbt);
+            case BEACON -> new BeaconBlockEntity(nbt);
+            case BEEHIVE -> new BeehiveBlockEntity(nbt);
+            case BELL -> new BlockEntity(nbt);
+            case BLAST_FURNACE, FURNACE, SMOKER -> new FurnaceBlockEntity(nbt);
+            case BREWING_STAND -> new BrewingStandBlockEntity(nbt);
+            case BRUSHABLE_BLOCK -> new BrushableBlockEntity(nbt);
+            case CALIBRATED_SCULK_SENSOR, SCULK_SENSOR -> new SculkBlockEntity(nbt);
+            case CAMPFIRE, SOUL_CAMPFIRE -> new CampfireBlockEntity(nbt);
+            case CHISELED_BOOKSHELF -> new ChiseledBookshelfBlockEntity(nbt);
+            case COMPARATOR -> new ComparatorBlockEntity(nbt);
+            case COMMAND_BLOCK -> new CommandBlockEntity(nbt);
+            case CONDUIT -> new ConduitBlockEntity(nbt);
+            case COPPER_GOLEM_STATUE -> new BlockEntity(nbt);
+            case CRAFTER -> new CrafterBlockEntity(nbt);
+            case CREAKING_HEART -> new CreakingHeartBlockEntity(nbt);
+            case DAYLIGHT_DETECTOR -> new BlockEntity(nbt);
+            case DECORATED_POT -> new DecoratedPotBlockEntity(nbt);
+            case DISPENSER, DROPPER -> new InventoryBlockEntity(nbt);
+            case ENCHANTING_TABLE -> new BlockEntity(nbt);
+            case ENDER_CHEST -> new BlockEntity(nbt);
+            case END_GATEWAY -> new EndGatewayBlockEntity(nbt);
+            case END_PORTAL -> new BlockEntity(nbt);
+            case HANGING_SIGN, SIGN -> new SignBlockEntity(nbt);
+            case HOPPER -> new HopperBlockEntity(nbt);
+            case JIGSAW -> new JigsawBlockEntity(nbt);
+            case JUKEBOX -> new JukeboxBlockEntity(nbt);
+            case LECTERN -> new LecternBlockEntity(nbt);
+            case MOB_SPAWNER -> new SpawnerBlockEntity(nbt);
+            case MOVING_PISTON -> new MovingPistonBlockEntity(nbt);
+            case POTENT_SULFUR -> new PotentSulfurBlockEntity(nbt);
+            case SKULL -> new SkullBlockEntity(nbt);
+            case SCULK_CATALYST -> new SculkCatalystBlockEntity(nbt);
+            case SCULK_SHRIEKER -> new SculkBlockEntity(nbt);
+            case SHELF -> new ShelfBlockEntity(nbt);
+            case STRUCTURE_BLOCK -> new StructureBlockEntity(nbt);
+            case TEST_BLOCK -> new TestBlockEntity(nbt);
+            case TEST_INSTANCE_BLOCK -> new TestInstanceBlockEntity(nbt);
+            case TRIAL_SPAWNER -> new TrialSpawnerBlockEntity(nbt);
+            case VAULT -> new VaultBlockEntity(nbt);
+        };
+    }
+}
