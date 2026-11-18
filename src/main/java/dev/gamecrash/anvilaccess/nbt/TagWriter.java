@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 public class TagWriter {
+    private TagWriter() {}
+
     public static void writeNamed(DataOutputStream out, String name, Tag<?> tag) throws IOException {
         if (tag == null || tag.getType() == TagType.END) {
             out.writeByte(0);

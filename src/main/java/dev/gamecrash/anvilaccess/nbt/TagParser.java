@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 public class TagParser {
+    private TagParser() {}
+
     public static Tag<?> readTag(DataInputStream in, TagType type) throws IOException {
         return readTag(in, type, 0);
     }
