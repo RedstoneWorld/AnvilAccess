@@ -19,7 +19,7 @@ public class BlockEntityParser {
     public static BlockEntity fromNbt(CompoundTag nbt) {
         String id = nbt.getString("id", "unknown");
         BlockEntityType type = BlockEntityType.fromId(id).orElse(null);
-        if (type == null) return new BlockEntity(nbt);
+        if (type == null) return new BlockEntity(nbt, true);
 
         return switch (type) {
             case BANNER -> new BannerBlockEntity(nbt);

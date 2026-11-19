@@ -16,6 +16,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BlockEntity {
     private final CompoundTag nbt;
+    /** Whether the library knows the type of this BlockEntity and provides a Wrapper class for it. */
+    private final boolean unknown;
+
+    public BlockEntity(CompoundTag nbt) {
+        this.nbt = nbt;
+        this.unknown = false;
+    }
 
     public String getId() {
         return nbt.getString("id", "unknown");
