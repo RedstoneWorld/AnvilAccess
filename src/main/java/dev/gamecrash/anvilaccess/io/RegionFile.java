@@ -2,16 +2,17 @@ package dev.gamecrash.anvilaccess.io;
 
 import dev.gamecrash.anvilaccess.model.RegionHeaderEntry;
 import dev.gamecrash.anvilaccess.nbt.TagParser;
+import dev.gamecrash.anvilaccess.nbt.TagWriter;
 import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
-import dev.gamecrash.anvilaccess.nbt.tag.EndTag;
 import dev.gamecrash.anvilaccess.util.compression.CompressionType;
 import dev.gamecrash.anvilaccess.util.compression.CompressionUtils;
 import dev.gamecrash.anvilaccess.util.io.FastByteArrayInputStream;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.plaf.synth.Region;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
@@ -20,9 +21,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.BitSet;
 
-public class RegionFile {
+public class RegionFile implements AutoCloseable {
     private static final int SECTOR = 4096;
     private static final int EXT =  0x80;
+    private static final int MAX_SECTORS = 255;
 
     private final Path path;
     @Getter
@@ -104,6 +106,50 @@ public class RegionFile {
         return (CompoundTag) TagParser.readNamed(new DataInputStream(new FastByteArrayInputStream(nbt))).tag();
     }
 
+    public synchronized void writeChunk(int x, int z, CompoundTag chunk) throws IOException {
+        int idx = idx(x, z);
+
+        ByteArrayOutputStream raw = new ByteArrayOutputStream(16 * 1024);
+        TagWriter.writeNamed(new DataOutputStream(raw), "", chunk);
+        byte[] data = CompressionUtils.compress(raw.toByteArray(), compression);
+
+        int size = data.length + 5;
+        int sectors = (size + SECTOR - 1) / SECTOR;
+        boolean ext = sectors > MAX_SECTORS;
+        if (ext) {
+            Files.write(extPath(x, z), data);
+            sectors = 1;
+        }
+
+        ByteBuffer buf = ByteBuffer.allocate(sectors + SECTOR);
+        buf.putInt(ext ? 1 : data.length + 1);
+        buf.put((byte) (compression.getId() | (ext ? EXT : 0)));
+        if (!ext) buf.put(data);
+        buf.rewind();
+
+        int old = locations[idx];
+        if (old != 0) usedSectors.clear(old >>> 8, (old >>> 8) + (old & 0xFF));
+
+        int offset = allocate(sectors);
+        writeFully(buf, (long) offset + SECTOR);
+        writeHeader(idx, (offset << 8) | sectors, (int) (System.currentTimeMillis() / 1000));
+    }
+
+    public synchronized void deleteChunk(int x, int z) throws IOException {
+        int idx = idx(x, z);
+        int old = locations[idx];
+        if (old == 0) return;
+
+        usedSectors.clear(old >>> 8, (old >>> 8) + (old & 0xFF));
+        writeHeader(idx, 0, 0);
+        if ((old & 0xFF) == 1) Files.deleteIfExists(extPath(x, z));
+    }
+
+    @Override
+    public synchronized void close() throws IOException {
+        channel.close();
+    }
+
     private void readFully(ByteBuffer buf, long pos) throws IOException {
         while (buf.hasRemaining()) {
             int read = channel.read(buf, pos + buf.position());
@@ -117,5 +163,31 @@ public class RegionFile {
 
     private Path extPath(int x, int z) {
         return path.resolveSibling("c." + (regionX * 32 + x) + "." + (regionZ * 32 + z) + ".mcc");
+    }
+
+    private int allocate(int sectors) {
+        int start = 2;
+        while (true) {
+            int free = usedSectors.nextClearBit(start);
+            int nextUsed = usedSectors.nextSetBit(free);
+            if (nextUsed == -1 || nextUsed - free >= sectors) {
+                usedSectors.set(free, free + sectors);
+                return free;
+            }
+            start = nextUsed;
+        }
+    }
+
+    private void writeFully(ByteBuffer buf, long pos) throws IOException {
+        while (buf.hasRemaining()) {
+            pos += channel.write(buf, pos);
+        }
+    }
+
+    private void writeHeader(int idx, int loc, int timestamp) throws IOException {
+        writeFully(ByteBuffer.allocate(4).putInt(0, loc), idx * 4L);
+        writeFully(ByteBuffer.allocate(4).putInt(0, timestamp), SECTOR + idx * 4L);
+        locations[idx] = loc;
+        timestamps[idx] = timestamp;
     }
 }
