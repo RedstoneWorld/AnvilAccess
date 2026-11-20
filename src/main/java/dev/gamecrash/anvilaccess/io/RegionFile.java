@@ -1,6 +1,8 @@
 package dev.gamecrash.anvilaccess.io;
 
+import dev.gamecrash.anvilaccess.model.Chunk;
 import dev.gamecrash.anvilaccess.model.RegionHeaderEntry;
+import dev.gamecrash.anvilaccess.nbt.ChunkCodec;
 import dev.gamecrash.anvilaccess.nbt.TagParser;
 import dev.gamecrash.anvilaccess.nbt.TagWriter;
 import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
@@ -19,7 +21,9 @@ import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Objects;
 
 public class RegionFile implements AutoCloseable {
     private static final int SECTOR = 4096;
@@ -145,6 +149,10 @@ public class RegionFile implements AutoCloseable {
         if ((old & 0xFF) == 1) Files.deleteIfExists(extPath(x, z));
     }
 
+    public synchronized Chunk getChunk(int x, int z) throws IOException {
+        return ChunkCodec.decode(x, z, readChunk(x, z));
+    }
+
     @Override
     public synchronized void close() throws IOException {
         channel.close();
@@ -158,7 +166,7 @@ public class RegionFile implements AutoCloseable {
     }
 
     private static int idx(int x, int z) {
-        return z * 32 + x;
+        return Objects.checkIndex(z, 32) * 32 + Objects.checkIndex(x, 32);
     }
 
     private Path extPath(int x, int z) {
