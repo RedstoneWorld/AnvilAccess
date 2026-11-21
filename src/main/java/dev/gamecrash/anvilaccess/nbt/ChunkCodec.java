@@ -45,11 +45,13 @@ public class ChunkCodec {
         List<BlockState> palette = new ArrayList<>();
         long[] d = null;
         CompoundTag blockStates = tag.getCompound("block_states", null);
-        ListTag paletteTag = blockStates.getList("palette", null);
-        if (paletteTag != null) {
-            for (int i = 0; i < paletteTag.size(); i++) palette.add(decodeBlockState(paletteTag.getCompound(i)));
+        if (blockStates != null) {
+            ListTag paletteTag = blockStates.getList("palette", null);
+            if (paletteTag != null) {
+                for (int i = 0; i < paletteTag.size(); i++) palette.add(decodeBlockState(paletteTag.getCompound(i)));
+            }
+            d = blockStates.getLongArray("data", null);
         }
-        d = blockStates.getLongArray("data", null);
 
         if (palette.isEmpty()) palette.add(new BlockState("minecraft:air"));
         return new Section(sectionY(tag), palette, d);

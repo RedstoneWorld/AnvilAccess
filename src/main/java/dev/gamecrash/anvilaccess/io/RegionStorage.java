@@ -37,7 +37,7 @@ public class RegionStorage implements AutoCloseable {
 
     public synchronized CompoundTag read(int chunkX, int chunkZ) throws IOException {
         RegionFile r = region(chunkX >> 5, chunkZ >> 5, false);
-        return r == null ? null : r.readChunk(chunkX, chunkZ);
+        return r == null ? null : r.readChunk(chunkX & 31, chunkZ & 31);
     }
 
     public synchronized void write(int chunkX, int chunkZ, CompoundTag chunk) throws IOException {
