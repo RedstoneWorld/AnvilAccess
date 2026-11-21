@@ -1,6 +1,7 @@
 package dev.gamecrash.anvilaccess.nbt.tag;
 
 import dev.gamecrash.anvilaccess.nbt.TagType;
+import dev.gamecrash.anvilaccess.nbt.snbt.serializer.ComplexSerializer;
 import dev.gamecrash.anvilaccess.nbt.snbt.serializer.Serializable;
 
 import java.util.Objects;
@@ -8,7 +9,7 @@ import java.util.Objects;
 /**
  * String tag
  */
-@Serializable
+@Serializable(serializer = ComplexSerializer.class)
 public class StringTag extends Tag<String> {
     private String value;
 

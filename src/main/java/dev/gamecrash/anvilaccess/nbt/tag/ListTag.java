@@ -40,6 +40,11 @@ public class ListTag extends Tag<List<Tag<?>>> {
         value.add(tag);
     }
 
+    public void addAll(List<Tag<?>> tags) {
+        if (tags.stream().anyMatch(t -> t.type != elementType)) throw new IllegalArgumentException("Elements must be of same type as given elementType");
+        value.addAll(tags);
+    }
+
     public Tag<?> get(int index) {
         return value.get(index);
     }
