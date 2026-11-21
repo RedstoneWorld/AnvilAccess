@@ -3,9 +3,7 @@ package dev.gamecrash.anvilaccess.nbt;
 import dev.gamecrash.anvilaccess.model.BlockState;
 import dev.gamecrash.anvilaccess.model.Chunk;
 import dev.gamecrash.anvilaccess.model.Section;
-import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
-import dev.gamecrash.anvilaccess.nbt.tag.ListTag;
-import dev.gamecrash.anvilaccess.nbt.tag.Tag;
+import dev.gamecrash.anvilaccess.nbt.tag.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +21,24 @@ public class ChunkCodec {
         }
 
         return new Chunk(chunkX, chunkZ, root, sections);
+    }
+
+    public static CompoundTag encode(Chunk chunk) {
+        CompoundTag root = chunk.getNbt();
+        ListTag list = root.getList("sections", null);
+        if (list == null) return root;
+
+        for (int i = 0; i < list.size(); i++) {
+            CompoundTag sectionTag = list.getCompound(i);
+            int y = sectionY(sectionTag);
+
+            chunk.getSections().stream()
+                .filter(section -> section.getYIndex() == y && section.isModified())
+                .findFirst()
+                .ifPresent(section -> sectionTag.put("block_states", encodeBlockStates(section)));
+        }
+
+        return root;
     }
 
     private static Section decodeSection(CompoundTag tag) {
@@ -47,6 +63,27 @@ public class ChunkCodec {
         }
 
         return new BlockState(tag.getString("Name", "minecraft:air"), properties);
+    }
+
+    private static CompoundTag encodeBlockStates(Section section) {
+        ListTag palette = new ListTag(TagType.COMPOUND);
+        for (BlockState state : section.getPalette()) {
+            CompoundTag stateTag = new CompoundTag();
+            stateTag.put("Name", new StringTag(state.id()));
+
+            if (!state.properties().isEmpty()) {
+                CompoundTag properties = new CompoundTag();
+                state.properties().forEach((key, value) -> properties.put(key, new StringTag(value)));
+                stateTag.put("Properties", properties);
+            }
+
+            palette.add(stateTag);
+        }
+
+        CompoundTag blockStates = new CompoundTag();
+        blockStates.put("palette", palette);
+        if (section.getData() != null) blockStates.put("data", new LongArrayTag(section.getData()));
+        return blockStates;
     }
 
     private static int sectionY(CompoundTag section) {

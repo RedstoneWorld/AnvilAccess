@@ -153,6 +153,10 @@ public class RegionFile implements AutoCloseable {
         return ChunkCodec.decode(x, z, readChunk(x, z));
     }
 
+    public synchronized void writeChunk(Chunk chunk) throws IOException {
+        writeChunk(chunk.getChunkX(), chunk.getChunkZ(), chunk.getNbt());
+    }
+
     @Override
     public synchronized void close() throws IOException {
         channel.close();

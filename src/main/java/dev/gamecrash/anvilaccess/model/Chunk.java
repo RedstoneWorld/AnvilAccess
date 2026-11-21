@@ -1,6 +1,7 @@
 package dev.gamecrash.anvilaccess.model;
 
 import dev.gamecrash.anvilaccess.nbt.BlockEntityParser;
+import dev.gamecrash.anvilaccess.nbt.ChunkCodec;
 import dev.gamecrash.anvilaccess.nbt.blockentities.base.BlockEntity;
 import dev.gamecrash.anvilaccess.nbt.tag.CompoundTag;
 import dev.gamecrash.anvilaccess.nbt.tag.ListTag;
@@ -12,7 +13,7 @@ public class Chunk {
     @Getter
     private final int chunkX, chunkZ;
     @Getter
-    private final CompoundTag nbt;
+    private CompoundTag nbt;
     @Getter
     private final List<Section> sections;
     private final Map<Integer, Section> sectionsByY = new HashMap<>();
@@ -55,6 +56,7 @@ public class Chunk {
         Section s = sectionsByY.get(y >> 4);
         if (s == null) throw new IllegalArgumentException("Chunk has no section at given y " + y);
         s.setBlockState(x & 15, y & 15, z & 15, state);
+        nbt = ChunkCodec.encode(this);
     }
 
     public int getMinY() {
